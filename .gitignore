@@ -1,0 +1,6 @@
+.vscode
+other
+tests
+tasks
+.DS_Store
+*.pyc
