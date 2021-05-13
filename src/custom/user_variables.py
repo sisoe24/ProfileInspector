@@ -36,7 +36,7 @@ def _nb_only_write(node, nodeClass="Write"):
     :param: nuke node object
 
     """
-    return os.path.basename(node.toKnob('file').value())
+    return node.name()
 
 
 def _nb_current_date(nodeClass="*"):
