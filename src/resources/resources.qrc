@@ -1,0 +1,11 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="icons">
+        <file alias="case-sensitive-off">icons/case-sensitive-light.svg</file>
+        <file alias="case-sensitive-on">icons/case-sensitive-dark.svg</file>
+        <file alias="whole-word-off">icons/whole-word-light.svg</file>
+        <file alias="whole-word-on">icons/whole-word-dark.svg</file>
+        <file alias="replace">icons/replace-light.svg</file>
+        <file alias="search">icons/search-light.svg</file>
+    </qresource>
+</RCC>

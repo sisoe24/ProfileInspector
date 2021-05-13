@@ -1,6 +1,13 @@
+# folders
 .vscode
 other
 tests
 tasks
+log
+code
+tasks
+
+# files
 .DS_Store
 *.pyc
+app.py
