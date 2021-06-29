@@ -1,39 +1,49 @@
+"""Logging module."""
 # coding: utf-8
 from __future__ import print_function
 
-"""Logging module."""
 import os
 import sys
 import logging
 
-# base logging
-LOGGER = logging.getLogger('NodeBox')
-
-LOGGER.setLevel(logging.DEBUG)
-LOGGER.setLevel(logging.INFO)
+# ! TODO: nuke will create its own logging console stdout for some reason
 
 LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'log')
-
 if not os.path.exists(LOG_PATH):
     os.mkdir(LOG_PATH)
 
-CRITICAL_FORMAT = logging.Formatter(
-    '%(asctime)s - [%(levelname)s] - %(module)s:%(lineno)d:%(funcName)s() - %(message)s')
-CRITICAL = logging.FileHandler(os.path.join(LOG_PATH, 'errors.log'), 'a')
-CRITICAL.setLevel(logging.WARNING)
-CRITICAL.setFormatter(CRITICAL_FORMAT)
-LOGGER.addHandler(CRITICAL)
+
+LOGGER = logging.getLogger('ProfileInspector')
+LOGGER.setLevel(logging.DEBUG)
 
 BASE_FORMAT = logging.Formatter(
-    '%(asctime)s - %(filename)-20s %(funcName)-25s %(levelname)-10s %(message)s')
-DEBUG = logging.FileHandler(os.path.join(LOG_PATH, 'debug.log'), 'w')
-DEBUG.setLevel(logging.DEBUG)
-DEBUG.setFormatter(BASE_FORMAT)
-LOGGER.addHandler(DEBUG)
+    '[%(asctime)s] %(levelname)-10s %(filename)-20s %(funcName)-25s :: %(message)s',
+    "%m-%d %I:%M%p")
 
-CONSOLE_FORMAT = logging.Formatter(
-    '[%(levelname)s] %(module)-7s%(lineno)-5d%(funcName)-25s : %(message)s')
-CONSOLE = logging.StreamHandler(stream=sys.stdout)
-CONSOLE.setLevel(logging.DEBUG)
-CONSOLE.setFormatter(CONSOLE_FORMAT)
-LOGGER.addHandler(CONSOLE)
+
+def set_critical():
+    critical = logging.FileHandler(os.path.join(LOG_PATH, 'errors.log'), 'w')
+    critical.setLevel(logging.WARNING)
+    critical.setFormatter(BASE_FORMAT)
+    return critical
+
+
+def set_debug():
+    debug = logging.FileHandler(os.path.join(LOG_PATH, 'debug.log'), 'w')
+    debug.setLevel(logging.DEBUG)
+    debug.setFormatter(BASE_FORMAT)
+    return debug
+
+
+def set_console():
+    console_format = logging.Formatter(
+        '%(levelname)-8s:: %(module)-10s%(funcName)-15sL:%(lineno)-5d :: %(message)s')
+    console = logging.StreamHandler(stream=sys.stdout)
+    console.setLevel(logging.INFO)
+    console.setFormatter(console_format)
+    return console
+
+
+LOGGER.addHandler(set_critical())
+LOGGER.addHandler(set_debug())
+LOGGER.addHandler(set_console())

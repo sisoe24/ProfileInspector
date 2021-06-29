@@ -1,1 +1,1 @@
-from NodeBox.src.tmp.test_widget import *
+from ProfileInspector.src.tmp.test_widget import *

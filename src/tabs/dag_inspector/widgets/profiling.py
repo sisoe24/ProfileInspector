@@ -3,9 +3,8 @@ from __future__ import print_function
 
 import logging
 
+
 from PySide2.QtWidgets import (
-    QSpinBox,
-    QSizePolicy,
     QVBoxLayout,
     QHBoxLayout,
     QGroupBox,
@@ -18,59 +17,16 @@ from PySide2.QtWidgets import (
     QGridLayout
 )
 
-from NodeBox.src import util
+from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.widgets import TimingsGroup
 
-LOGGER = logging.getLogger('NodeBox.profiling')
-
-
-class ExportGroup(QGroupBox):
-    def __init__(self, title='Export'):
-        QGroupBox.__init__(self, title)
-
-
-class OptionGroup(QGroupBox):
-    def __init__(self, title='Options'):
-        QGroupBox.__init__(self, title)
-        util.widget_color(self, 'red')
-
-        form_layout = QFormLayout()
-
-        self.combobox_profiling_type = QComboBox()
-        self.combobox_profiling_type.addItems(
-            ['Store', 'Validate', 'Requests', 'Engine']
-        )
-        self.combobox_profiling_type.setCurrentIndex(3)
-
-        self.combobox_timings_format = QComboBox()
-        self.combobox_timings_format.addItems(
-            ['m:s:ms', 'm:s', 's:ms', 'ms']
-        )
-        self.combobox_timings_format.setCurrentIndex(2)
-
-        form_layout.addRow(QLabel('Profiling Type'),
-                           self.combobox_profiling_type)
-        form_layout.addRow(QLabel('Timings format'),
-                           self.combobox_timings_format)
-        # form_layout.addRow(QLabel('Round ms by'),   QSpinBox())
-
-        self.setLayout(form_layout)
-
-    @property
-    def timings_format(self):
-        return self.combobox_timings_format
-
-    @property
-    def profiling_type(self):
-        return self.combobox_profiling_type
+LOGGER = logging.getLogger('ProfileInspector.dag_profiling')
 
 
 class LiveGroup(QGroupBox):
+    @widget_color
     def __init__(self, title='Live Updates (Experimental)'):
         QGroupBox.__init__(self, title)
-        # util.widget_color(self, 'red')
-        # self.setCheckable(True)
-        self.setEnabled(False)
-
 
         _layout = QVBoxLayout()
 
@@ -82,7 +38,7 @@ class LiveGroup(QGroupBox):
         self._update_by_items.addItems(['updateUI', 'knobChanged'])
         self._update_by_items.setEnabled(False)
 
-        layout_form.addRow(QLabel('Enable/Disable'), self._toggle_live_update)
+        layout_form.addRow(QLabel('Enable'), self._toggle_live_update)
         layout_form.addRow(QLabel('Update by:'), self._update_by_items)
 
         _layout.addLayout(layout_form)
@@ -91,6 +47,9 @@ class LiveGroup(QGroupBox):
 
     def get_update_method(self):
         return self._update_by_items
+
+    def clear_callbacks(self):
+        return self._clean_callbacks_button
 
 
 class ButtonsLayout(QGridLayout):
@@ -101,22 +60,17 @@ class ButtonsLayout(QGridLayout):
 
         self._toggle_profiling_button = QPushButton('Start Profiling')
         self._toggle_profiling_button.setCheckable(True)
-        self._clean_callbacks_button = QPushButton('Clean Callbacks')
 
         self._reset_button = QPushButton('Reset timings')
 
-        self.addWidget(self._clean_callbacks_button, 0, 0)
-        self.addWidget(self._toggle_profiling_button, 1, 0, 1, 2)
-        self.addWidget(self._reset_button, 0, 1)
+        self.addWidget(self._toggle_profiling_button, 0, 1, 1, 1)
+        # self.addWidget(self._reset_button, 1, 1, 1, 1)
 
     def start_profiling(self):
         return self._toggle_profiling_button
 
     def reset_timings(self):
         return self._reset_button
-
-    def clear_callbacks(self):
-        return self._clean_callbacks_button
 
 
 class ProfilingGroupsLayout(QHBoxLayout):
@@ -126,22 +80,21 @@ class ProfilingGroupsLayout(QHBoxLayout):
         self.live_group = LiveGroup()
         self.addWidget(self.live_group)
 
-        self.options_group = OptionGroup()
+        self.options_group = TimingsGroup()
         self.addWidget(self.options_group)
-
-        self.export_group = ExportGroup()
-        self.addWidget(self.export_group)
 
 
 class ProfilingGroup(QGroupBox):
 
-    def __init__(self, title='Activate'):
+    def __init__(self, title='Activate Profiling Section'):
         QGroupBox.__init__(self, title)
+        self.setAlignment(4)
 
         self.setCheckable(True)
         self.setChecked(False)
 
         _layout = QVBoxLayout()
+        # _layout.setMargin(0)
 
         self.groups = ProfilingGroupsLayout()
         _layout.addLayout(self.groups)
@@ -154,13 +107,13 @@ class ProfilingGroup(QGroupBox):
 
 class ProfilingWidget(QWidget):
 
+    @widget_color
     def __init__(self):
         QWidget.__init__(self)
 
-        util.widget_color(self, 'pink')
+        self.setMinimumHeight(300)
 
         _layout = QVBoxLayout()
-        _layout.setSpacing(0)
         _layout.setMargin(0)
 
         self._profiling_group = ProfilingGroup()
@@ -172,45 +125,41 @@ class ProfilingWidget(QWidget):
         _layout.addWidget(self._profiling_group)
         self.setLayout(_layout)
 
-    @property
+    @ property
     def format_time_changed(self):
         return self._options_group.combobox_timings_format.currentTextChanged
 
-    @property
+    @ property
     def type_changed(self):
         return self._options_group.profiling_type.currentIndexChanged
 
-    @property
+    @ property
     def live_group(self):
         return self._live_group
 
-    @property
+    @ property
     def start(self):
         return self._buttons.start_profiling()
 
-    @property
-    def clear_callbacks(self):
-        return self._buttons.clear_callbacks()
-
-    @property
+    @ property
     def reset(self):
         return self._buttons.reset_timings()
 
-    @property
+    @ property
     def change_update(self):
         return self._live_group._update_by_items
 
     def get_update_method(self):
         return self._live_group._update_by_items.currentText()
 
-    @property
+    @ property
     def update_method_changed(self):
         return self._live_group._update_by_items.currentIndexChanged
 
-    @property
+    @ property
     def enable_live(self):
         return self._live_group._toggle_live_update
 
-    @property
+    @ property
     def toggled(self):
         return self._profiling_group.toggled

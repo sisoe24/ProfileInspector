@@ -1,4 +1,4 @@
-# NodeBox
+# ProfileInspector
 
 ## NOTE
 
@@ -18,7 +18,7 @@ Plugin is a table view app and offers various functionally of which some of them
 
 ## Installation
 
-Copy NodeBox inside _.nuke_ folder and in your `menu.py` and import it: `import NodeBox`. The plugin should work on custom paths added by `nuke.pluginAddPath()` but it has not yet been tested.
+Copy ProfileInspector inside _.nuke_ folder and in your `menu.py` and import it: `import ProfileInspector`. The plugin should work on custom paths added by `nuke.pluginAddPath()` but it has not yet been tested.
 
 ## Usage
 

@@ -1,21 +1,20 @@
 # coding: utf-8
 from __future__ import print_function
 
-# FIXME: something wrong happens here when there is an error loading a module
+import sys
+import logging
+
+from ProfileInspector.src import logger
+from ProfileInspector.src import resources
+from ProfileInspector.src.version import __version__
+
+LOGGER = logging.getLogger('ProfileInspector.init')
 try:
     import nuke
 except ImportError as error:
-    print('%s\nNuke built-in module not found.\nFallback to custom for testing\n' % error)
+    LOGGER.warning('%s: app is standalone' % error)
     try:
         from . import _nuke as nuke
     except Exception as error:
-        print("Generic Exception: %s" % error)
-
-try:
-    from NodeBox.src import logger
-    from NodeBox.src import util
-    from NodeBox.src.widgets import *
-    from NodeBox.src import main
-    from NodeBox.src import resources
-except Exception as error:
-    print("Generic Exception: %s" % error)
+        LOGGER.critical(error, exc_info=True)
+        sys.exit()

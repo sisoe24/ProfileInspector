@@ -7,5 +7,6 @@
         <file alias="whole-word-on">icons/whole-word-dark.svg</file>
         <file alias="replace">icons/replace-light.svg</file>
         <file alias="search">icons/search-light.svg</file>
+        <file alias="folder">icons/file-directory.svg</file>
     </qresource>
 </RCC>

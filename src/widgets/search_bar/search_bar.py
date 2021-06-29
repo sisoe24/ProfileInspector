@@ -9,7 +9,6 @@ from PySide2.QtCore import Qt
 
 from PySide2.QtWidgets import (
     QAction,
-    QPushButton,
     QToolButton,
     QWidget,
     QVBoxLayout,
@@ -17,30 +16,26 @@ from PySide2.QtWidgets import (
     QLabel,
     QLineEdit,
     QComboBox,
-    QGroupBox
 )
 
-from NodeBox.src import nuke, util, resources
-from NodeBox.src.widgets import ButtonSection
+from ProfileInspector.src.util import widget_color
 
-LOGGER = logging.getLogger('NodeBox.search')
+
+from .search_bar_settings import SearchBarSettingsWidget
+
+LOGGER = logging.getLogger('ProfileInspector.search')
 
 
 class SearchNode(QLineEdit):
     def __init__(self):
         QLineEdit.__init__(self)
         # XXX: add completition/suggestion?
+
         self.setPlaceholderText('Find')
         self.setClearButtonEnabled(True)
 
         self.search_icon = QAction('Search', self)
         self.search_icon.setIcon(QIcon(":/icons/search"))
-
-        # self.regex_action = QAction('Use Regex/Wildcard', self)
-        # # self.regex_action.setIcon(QIcon(':/icons/regex-on'))
-        # self.regex_action.setCheckable(True)
-        # self.regex_action.setChecked(True)
-        # self.regex_action.setEnabled(False)
 
         self.case_sensitive_action = QAction('Use case sensitivty', self)
         self.case_sensitive_action.setIcon(QIcon(":/icons/case-sensitive-off"))
@@ -53,7 +48,6 @@ class SearchNode(QLineEdit):
         self.whole_word_action.setChecked(False)
 
         self.addAction(self.search_icon, QLineEdit.LeadingPosition)
-        # self.addAction(self.regex_action, QLineEdit.TrailingPosition)
         self.addAction(self.case_sensitive_action, QLineEdit.TrailingPosition)
         self.addAction(self.whole_word_action, QLineEdit.TrailingPosition)
 
@@ -72,9 +66,6 @@ class SearchNode(QLineEdit):
     def update_word_icon(self):
         self.update_icon(self.whole_word_action, 'whole-word')
 
-    # def toggle_regex(self):
-    #     return self.regex_action.triggered
-
     def toggle_case_sensitive(self):
         return self.case_sensitive_action
 
@@ -85,92 +76,62 @@ class SearchNode(QLineEdit):
         return self.whole_word_action.isChecked()
 
 
-class ReplaceNode(QWidget):
-    # ! TODO: implement this section by itself or with the rename section
-    def __init__(self):
-        QWidget.__init__(self)
-        util.widget_color(self, 'blue')
-
-        self.setHidden(True)
-        replace_icon = QAction('Search', self)
-        replace_icon.setIcon(QIcon(":/icons/replace"))
-
-        _layout = QHBoxLayout()
-        _layout.setMargin(0)
-
-        _layout.addSpacing(35)
-
-        # _layout.addWidget(QLabel('Replace'))
-        q = QLineEdit()
-        q.setPlaceholderText('Replace')
-        q.addAction(replace_icon, QLineEdit.LeadingPosition)
-        _layout.addWidget(q)
-
-        t1 = QToolButton()
-        t1.setArrowType(Qt.LeftArrow)
-        _layout.addWidget(t1)
-
-        t2 = QToolButton()
-        t2.setArrowType(Qt.RightArrow)
-        _layout.addWidget(t2)
-
-        _layout.addWidget(QPushButton('Replace'))
-        _layout.addWidget(QPushButton('Replace All'))
-
-        self.setLayout(_layout)
-
-
 class SearchBarLayout(QHBoxLayout):
     def __init__(self):
         QHBoxLayout.__init__(self)
 
-        self.setMargin(0)
+        # self.setMargin(0)
 
         self.search_bar = SearchNode()
 
-        self._show_replace = QToolButton()
-        self._show_replace.setArrowType(Qt.RightArrow)
-        self._show_replace.setCheckable(True)
-
-        # XXX: should add search in all columns?
         self.search_type = QComboBox()
-        self.search_type.addItems(['Name', 'Type'])
-        self.addWidget(self._show_replace)
+        self.search_type.addItems(['Name', 'Type', 'Mix'])
+        self.search_type.setFixedWidth(100)
+
+        self._show_advance_menu = QToolButton()
+        self._show_advance_menu.setStatusTip('Show Advanced options')
+        self._show_advance_menu.setToolTip('Show Advanced options')
+
+        self._show_advance_menu.setArrowType(Qt.RightArrow)
+        self._show_advance_menu.setCheckable(True)
+        self.addWidget(self._show_advance_menu)
+
         self.addWidget(self.search_bar)
-        self.addWidget(QLabel("Search by:"))
+        self.addWidget(QLabel("Filter by:"))
         self.addWidget(self.search_type)
 
 
 class SearchBarWidget(QWidget):
+    @widget_color
     def __init__(self):
         QWidget.__init__(self)
-        util.widget_color(self, 'red')
 
-        _layout = QVBoxLayout()
-        _layout.setMargin(0)
+        self._layout = QVBoxLayout()
+        # self._layout.setMargin(0)
 
         search_bar_layout = SearchBarLayout()
-        self._show_replace = search_bar_layout._show_replace
-        self._show_replace.toggled.connect(self.show_replace_menu)
-
-        self.replace_bar = ReplaceNode()
 
         self._search_bar = search_bar_layout.search_bar
         self._search_column = search_bar_layout.search_type
 
-        _layout.addLayout(search_bar_layout)
-        _layout.addWidget(self.replace_bar)
+        self._layout.addLayout(search_bar_layout)
 
-        self.setLayout(_layout)
+        self._show_advance_menu = search_bar_layout._show_advance_menu
+        self._show_advance_menu.toggled.connect(self.show_advance_menu)
 
-    def show_replace_menu(self, state):
+        self.advance_settings = SearchBarSettingsWidget()
+        self._layout.addWidget(self.advance_settings)
+
+        self.setLayout(self._layout)
+
+    def show_advance_menu(self, state):
         if state:
             arrow = Qt.DownArrow
         else:
             arrow = Qt.RightArrow
 
-        self.replace_bar.setHidden(not state)
-        self._show_replace.setArrowType(arrow)
+        self.advance_settings.setHidden(not state)
+        self._show_advance_menu.setArrowType(arrow)
 
     def text(self):
         return self._search_bar.text()
@@ -209,10 +170,6 @@ class SearchBarWidget(QWidget):
     @property
     def case_sensitive(self):
         return self._search_bar.toggle_case_sensitive()
-
-    # @property
-    # def filter_type(self):
-    #     return self._search_bar.toggle_regex()
 
     @property
     def rename(self):

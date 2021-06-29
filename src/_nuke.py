@@ -1,51 +1,63 @@
-"""
-nuke.startPerformanceTimers()
-for node in nuke.allNodes(recurseGroups=True):
-
-    timings = ""
-    if nuke.usingPerformanceTimers():
-        timings = node.performanceInfo()
-
-    print node.fullName(), timings
-
-nuke.stopPerformanceTimers()
-"""
-
 # coding: utf-8
 from __future__ import print_function
 
+import os
 import random
 import logging
+
+
+def set_handler():
+    handler = logging.FileHandler('log/nuke.log', 'w')
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(logging.Formatter(
+        '%(levelname)-8s %(funcName)-25s L:%(lineno)-3s :: %(message)s'
+    ))
+    return handler
+
+
+LOGGER = logging.getLogger('nuke')
+LOGGER.setLevel(logging.DEBUG)
+LOGGER.addHandler(set_handler())
+
+
+NUKE_VERSION_STRING = '13.0v1'
 
 PROFILE_STORE = 0
 PROFILE_VALIDATE = 1
 PROFILE_REQUEST = 2
 PROFILE_ENGINE = 3
 
-LOGGER = logging.getLogger('NodeBox._nuke')
-
-
-def allNodes():
-    node_names = ['Grade', 'Write', 'Shuffle', 'Dot1', 'Viewer11',
-                  'Axis', 'Roto', 'Viewer', 'Write', 'o_test',
-                  'ColorCorrection', 'Reconcile3D', 'Transform',
-                  'Diff_color_walls', 'Diff_indirect_walls']
-    node_list = set()
-
-    node_index = 1
-    while len(node_list) <= random.randint(15, 16):
-        random_node = random.choice(node_names)
-
-        if random.randint(1, 10) % 2 == 0:
-            node_index = 1
-
-        random_node += str(node_index)
-
-        node_list.add(random_node)
-
-        node_index += 1
-
-    return [Node(n) for n in set(node_list)]
+env = {
+    '64bit': True,
+    'ExecutablePath': '/Applications/Nuke13.0v1/Nuke13.0v1.app/Contents/MacOS/Nuke13.0',
+    'ExternalPython': False,
+    'LINUX': False,
+    'MACOS': True,
+    'WIN32': False,
+    'numCPUs': 10,
+    'threads': 10,
+    'NukeLibraryPath': '/Applications/Nuke13.0v1/Nuke13.0v1.app/Contents/MacOS/libnuke-13.0.1.dylib',
+    'NukeVersionDate': 'Mar  9 2021',
+    'NukeVersionMajor': 13,
+    'NukeVersionMinor': 0,
+    'NukeVersionPhase': None,
+    'NukeVersionPhaseNumber': 633628,
+    'NukeVersionRelease': 1,
+    'NukeVersionString': '13.0v1',
+    'PluginExtension': 'dylib',
+    'PluginsVerbose': False,
+    'assist': False,
+    'gui': True,
+    'hiero': False,
+    'hieroNuke': False,
+    'hieroStudio': False,
+    'indie': False,
+    'interactive': True,
+    'nc': False,
+    'nukex': False,
+    'ple': False,
+    'studio': False,
+}
 
 
 class callbacks:
@@ -54,30 +66,58 @@ class callbacks:
 
 
 def addKnobChanged(call, args=(), kwargs={}, nodeClass="*"):
-    LOGGER.info('KnobChanged enabled')
+    LOGGER.debug('KnobChanged enabled')
     call()
 
 
 def addUpdateUI(call, args=(), kwargs={}, nodeClass="*"):
-    LOGGER.info('UpdateUI enabled')
+    LOGGER.debug('UpdateUI enabled')
     call()
+
+
+def showInfo(msg):
+    return msg
 
 
 class root:
     def name(self):
-        return 'ProjectName'
+        path = 'string_placeholder_name_project.nk'
+
+        tmp_project = 'other/test_project.nk'
+        if os.path.exists(tmp_project):
+            path = os.path.abspath(tmp_project)
+
+        LOGGER.debug('Nuke.root() project name: %s', path)
+        return path
 
 
-class ProfileState:
-    state = False
+def allNodes():
+    nodes = {
+        'Grade': 'Grade',
+        'Render': 'Write',
+        'ReadRGB': 'Shuffle',
+        'Diff_color': 'Read',
+        'Transform_Roto': 'Transform',
+        'LeftAxis': 'Reconcile3D',
+        'Dot': 'Dot', 'Viewer': 'Viewer',
+    }
 
-    @classmethod
-    def update_state(cls, state):
-        cls.state = state
+    nodes_list = {}
+    node_index = 1
 
-    @classmethod
-    def get_state(cls):
-        return cls.state
+    while len(nodes_list) <= random.randint(15, 16):
+        node_name = random.choice(nodes.keys())
+
+        if random.randint(1, 10) % 2 == 0:
+            node_index = 1
+
+        node_name += str(node_index)
+
+        nodes_list[node_name] = nodes[node_name[:-1]]
+
+        node_index += 1
+
+    return [Node(n) for n in nodes_list.items()]
 
 
 class Node:
@@ -93,15 +133,10 @@ class Node:
         pass
 
     def name(self):
-        return self.node
+        return self.node[0]
 
     def Class(self):
-        return self.node[:-1]
-
-    def dependent(self):
-        a = Node('Random')
-        b = Node('Random2')
-        return None
+        return self.node[1]
 
     @staticmethod
     def performanceInfo(stats=PROFILE_ENGINE):
@@ -114,24 +149,36 @@ class Node:
                 'timeTakenCPU': r()}
 
 
+class ProfileState:
+    state = False
+
+    @classmethod
+    def update_state(cls, state):
+        cls.state = state
+
+    @classmethod
+    def get_state(cls):
+        return cls.state
+
+
 def startPerformanceTimers():
-    LOGGER.info('-> Start Profiling')
+    LOGGER.debug('-> Start Profiling')
     ProfileState().update_state(True)
 
 
 def stopPerformanceTimers():
-    LOGGER.info('Stop Profiling <-')
+    LOGGER.debug('Stop Profiling <-')
     ProfileState().update_state(False)
 
 
 def usingPerformanceTimers():
     state = ProfileState().get_state()
-    LOGGER.debug('Using Profiling: %s', state)
+    LOGGER.debug('Profiling active: %s', state)
     return state
 
 
 def resetPerformanceTimers():
-    LOGGER.info('Reset Profiling Timers')
+    LOGGER.debug('Reset Profiling Timers')
 
 
 def selectedNode():
@@ -157,32 +204,10 @@ def selectedNodes():
 
 
 def show(node, forceFloat=False):
-    LOGGER.info('Show panel for: %s', node)
-
-
-def test_class():
-    '''
-    dict = {'Write1' : {
-        'class': 'WRITE',
-        'timinigs' : {
-            'callCount': 1,
-            'timeTakenWall': 1,
-            'timeTakenCPU': 1
-            }
-        }
-    }
-    '''
-    node_dict = {}
-    using_timers = usingPerformanceTimers()
-
-    for node in allNodes():
-        node_dict[node.name()] = {}
-        node_dict[node.name()].update({'class': node.Class()})
-        if using_timers:
-            node_dict[node.name()].update({'timings': node.performanceInfo()})
-
-    # return collections.OrderedDict(sorted(node_dict.items()))
+    LOGGER.debug('Show panel for: %s - floating: %s', node, forceFloat)
 
 
 if __name__ == '__main__':
-    test_class()
+
+    for i in allNodes():
+        print('name :', i.name(), '- class :', i.Class())
