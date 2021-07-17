@@ -11,5 +11,5 @@ tasks
 # files
 .DS_Store
 *.pyc
-app.py
+_app.py
 .env
