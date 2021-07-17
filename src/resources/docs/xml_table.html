@@ -1,0 +1,53 @@
+<html lang="en">
+
+<body>
+    <h1>XML Report Table</h1>
+    <p>Table that displays the xml report file that Nuke generates. To open a file, use the <b>Open File</b> button on
+        the toolbar.</p>
+    <p>
+        Each colum is a frame and on each row you will find the node name.
+        Because some nodes could have long names, by hovering over a row, a tooltip
+        will appear displaying the entire name.
+    </p>
+
+    <p>
+        The table offers a the same search bar that is found on the Dag page, so the same
+        features are available here; filter nodes using regex, filter by name, class etc.
+    </p>
+
+    <h2>Need To Knob</h2>
+    <p>
+        When loading a xml file, the plugin will try to verify that is a valid xml file before loading;
+        that is, will try to check for syntax errors, and if is a valid Nuke profiling file. <br>
+        When one or the other is not correct, the plugin will give an alert message with some indication on how to fix
+        it (e.g. missing closing tag).
+    </p>
+    <p>
+        Also keep in mind that, if you are trying to load an xml file that just be generated form Nuke,
+        remember that, You must close the Nuke app in order for the file to be completed.
+    </p>
+
+
+    <h2>Un-dock Window</h2>
+
+    <p>
+        The entire table can be un-docked from the Nuke main window.
+        <br>
+        This can be done in two ways;
+    <ul>
+        <li>By double clicking on the window title bar</li>
+        <li>By clicking on the un-dock icon.</li>
+    </ul>
+
+    You can dock back the window in the same way,
+    double-clicking on the title bar or click on the close icon.
+    </p>
+
+    <h2>Order/Sort</h2>
+    <p>
+        The table allows to sort columns in ascending or descending order by clicking on a column header.
+    </p>
+
+</body>
+
+</html>

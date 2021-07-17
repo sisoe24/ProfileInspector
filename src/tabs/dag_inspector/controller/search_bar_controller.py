@@ -22,10 +22,7 @@ class SearchBarController():
 
         self.search_bar.case_sensitive.toggled.connect(self._set_filter_case)
 
-        self.search_bar.search_by_column.connect(
-            self._set_filter_column
-            # self.table_filter.setFilterKeyColumn
-        )
+        self.search_bar.search_by_column.connect(self._set_filter_column)
 
         self.search_bar.return_pressed.connect(
             self.main_window.table_view.setFocus

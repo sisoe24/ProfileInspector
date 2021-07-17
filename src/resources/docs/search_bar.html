@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+    <h1>Search Bar</h1>
+    <p>
+        The search bar allows you to filter the nodes present in the Node Graph,
+        with real time feedback of the result.<br>
+        It also accepts regular expression patterns.
+    </p>
+
+    <h2>Options</h2>
+
+    <dl>
+        <dt><b>Case Sensitive:</b></dt>
+        <dd>Toggle case sensitive.</dd>
+        <dt><b>Whole Word:</b></dt>
+        <dd>Search by whole word (equivalent to regex: <code>^text</code>).</dd>
+        <dt><b> Filter by:</b></dt>
+        <dd>
+            <li>Name - name of the Node.
+            <li>Type - type (class) of the node.</li>
+            <li>
+                Mix - Both name and type.
+                (eg: by writing <i>r</i> it will find both names and classes that have an r).
+            </li>
+        </dd>
+    </dl>
+    <h2>Advanced Options</h2>
+    <hr>
+    <p>
+        <b>NOTE:</b> This section will not be present in the XML Report page.
+    </p>
+    <p>
+        <hr>
+        By toggling the arrow on the left side of the search bar, some other options will be shown.
+        Those options state will be saved between sessions.
+    </p>
+    <dl>
+        <dt><b>Zoom when search:</b></dt>
+        <dd>
+            If enabled, when performing a search,
+            it will automatically zoom on the first node that matches the search pattern.
+        </dd>
+        <dt><b>Force floating properties:</b></dt>
+        <dd>
+            When double-clicking on a node name,
+            will load its proprieties on a floating window rather than inside Proprieties panel.
+        </dd>
+        <dt><b>Exclude nodes:</b></dt>
+        <dd>
+            Node Types (class) to be hidden in the table view.
+            The names can be written with a title case or lower case and
+            delimited by everything e.g. <i>dot Viewer, camera</i>.
+        </dd>
+    </dl>
+</body>
+
+</html>

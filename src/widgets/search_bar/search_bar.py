@@ -3,8 +3,10 @@ from __future__ import print_function
 
 import logging
 
+from textwrap import dedent
+
 from PySide2.QtGui import QIcon
-from PySide2.QtCore import Qt
+from PySide2.QtCore import QSettings, Qt
 
 
 from PySide2.QtWidgets import (
@@ -18,7 +20,8 @@ from PySide2.QtWidgets import (
     QComboBox,
 )
 
-from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.util import widget_color, doc_file
+from ..hover_popup import HoverHelper
 
 
 from .search_bar_settings import SearchBarSettingsWidget
@@ -37,12 +40,12 @@ class SearchNode(QLineEdit):
         self.search_icon = QAction('Search', self)
         self.search_icon.setIcon(QIcon(":/icons/search"))
 
-        self.case_sensitive_action = QAction('Use case sensitivty', self)
+        self.case_sensitive_action = QAction('Match Case', self)
         self.case_sensitive_action.setIcon(QIcon(":/icons/case-sensitive-off"))
         self.case_sensitive_action.setCheckable(True)
         self.case_sensitive_action.setChecked(False)
 
-        self.whole_word_action = QAction('Match whole word', self)
+        self.whole_word_action = QAction('Match Whole Word', self)
         self.whole_word_action.setIcon(QIcon(":/icons/whole-word-off"))
         self.whole_word_action.setCheckable(True)
         self.whole_word_action.setChecked(False)
@@ -85,12 +88,17 @@ class SearchBarLayout(QHBoxLayout):
         self.search_bar = SearchNode()
 
         self.search_type = QComboBox()
+        self.search_type.setToolTip(
+            '''<nobr><b>Filter nodes by</b><br>
+            Name: name of the node<br>
+            Type: type (class) of the node<br>
+            Mix: both name and type</nobr>''')
+
         self.search_type.addItems(['Name', 'Type', 'Mix'])
         self.search_type.setFixedWidth(100)
 
         self._show_advance_menu = QToolButton()
-        self._show_advance_menu.setStatusTip('Show Advanced options')
-        self._show_advance_menu.setToolTip('Show Advanced options')
+        self._show_advance_menu.setStatusTip('Show/Hide extra options')
 
         self._show_advance_menu.setArrowType(Qt.RightArrow)
         self._show_advance_menu.setCheckable(True)
@@ -105,6 +113,12 @@ class SearchBarWidget(QWidget):
     @widget_color
     def __init__(self):
         QWidget.__init__(self)
+        self.setWhatsThis('''
+        <p>
+        The search bar allows you to filter the nodes present in the Node Graph,
+        with real time feedback of the result.<br>
+        It also accepts regular expression patterns.
+        </p>''')
 
         self._layout = QVBoxLayout()
         # self._layout.setMargin(0)
@@ -139,15 +153,15 @@ class SearchBarWidget(QWidget):
     def clear(self):
         self._search_bar.clear()
 
-    @property
+    @ property
     def search_by_column(self):
         return self._search_column.currentIndexChanged
 
-    @property
+    @ property
     def return_pressed(self):
         return self._search_bar.returnPressed
 
-    @property
+    @ property
     def text_changed(self):
         return self._search_bar.textChanged
 
@@ -163,14 +177,14 @@ class SearchBarWidget(QWidget):
     def search_whole_word(self):
         return self._search_bar.search_whole_word()
 
-    @property
+    @ property
     def whole_word(self):
         return self._search_bar.toggle_word_match()
 
-    @property
+    @ property
     def case_sensitive(self):
         return self._search_bar.toggle_case_sensitive()
 
-    @property
+    @ property
     def rename(self):
         return self.btn_section.rename()

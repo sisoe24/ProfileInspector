@@ -7,6 +7,25 @@
         <file alias="whole-word-on">icons/whole-word-dark.svg</file>
         <file alias="replace">icons/replace-light.svg</file>
         <file alias="search">icons/search-light.svg</file>
-        <file alias="folder">icons/file-directory.svg</file>
+        
+        <file alias="folder">icons/dark/folder-opened.svg</file>
+        
+        <file alias="stopwatch">icons/stopwatch-dark.svg</file>
+        <file alias="clear-all">icons/clear-all-light.svg</file>
+        <file alias="question">icons/question-dark.svg</file>
     </qresource>
+
+    <qresource prefix="docs">
+        <file alias="timings">docs/timings.html</file>
+
+        <file alias="dag_live_update">docs/dag_live_update.html</file>
+        <file alias="dag_table">docs/dag_table.html</file>
+        <file alias="dag_refresh_table">docs/dag_refresh_table.html</file>
+
+        <file alias="xml_frames">docs/xml_frames.html</file>
+        <file alias="xml_table">docs/xml_table.html</file>
+
+        <file alias="launcher_capture_output">docs/launcher_capture_output.html</file>
+    </qresource>
+
 </RCC>

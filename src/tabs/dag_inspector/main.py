@@ -3,13 +3,8 @@ from __future__ import print_function
 
 import logging
 
-from PySide2.QtCore import (
-    Qt,
-    QSettings,
-    QSortFilterProxyModel,
-)
-
-from PySide2.QtGui import QStandardItem, QStandardItemModel
+from PySide2.QtGui import QIcon, QStandardItem, QStandardItemModel
+from PySide2.QtCore import Qt, QSettings, QSortFilterProxyModel
 
 from PySide2.QtWidgets import (
     QAction,
@@ -21,17 +16,18 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
-from ProfileInspector.src import nuke
-from ProfileInspector.src.widgets import SearchBarWidget, ToolBar
-from ProfileInspector.src.util.nuke_util import zoom_node
-from ProfileInspector.src.util import TimeFormatter, widget_color
-
-from .dag_nodes import DagNodes
-from .widgets import ProfilingWidget
 from .controller import (
     SearchBarController,
     ProfilingController
 )
+from .widgets import ProfilingWidget
+from .dag_nodes import DagNodes
+
+from ProfileInspector.src import nuke
+from ProfileInspector.src.util.nuke_util import zoom_node
+from ProfileInspector.src.widgets import SearchBarWidget, ToolBar
+from ProfileInspector.src.util import TimeFormatter, widget_color, doc_file
+
 
 LOGGER = logging.getLogger('ProfileInspector.dag_inspector')
 
@@ -110,6 +106,7 @@ class TableModel(QStandardItemModel):
 class TableView(QTableView):
     def __init__(self):
         QTableView.__init__(self)
+        self.setWhatsThis(doc_file('dag_table'))
 
         self.settings = QSettings()
 
@@ -144,7 +141,6 @@ class TableView(QTableView):
     def refresh(self):
         # XXX: not sure about refreshing profiling timers always
         # TODO: find a better way to refresh table instead of reset
-
         if nuke.usingPerformanceTimers():
             self.table_model.update_data()
             self.reset()
@@ -178,7 +174,7 @@ class TableView(QTableView):
         self.table_model.time_format = time_format
 
     def _create_profiling_columns(self):
-        # TODO: should see if hiding/unhiding is better
+        # TODO: should see if hiding/un hiding is better
         nuke.startPerformanceTimers()
         self.table_model.update_data()
 
@@ -209,9 +205,10 @@ class DagPageLayout(QWidget):
         self.table_view = TableView()
 
         self.refresh_table_btn = QPushButton('Refresh Table')
-        self.refresh_table_btn.setStatusTip(
-            'Refresh table by reloading nodes information and '
-            'will also take a snapshot of current profiling timings')
+        self.refresh_table_btn.setWhatsThis(doc_file('dag_refresh_table'))
+        self.refresh_table_btn.setToolTip(
+            'Refresh table by reloading nodes data'
+        )
         self.refresh_table_btn.clicked.connect(self.table_view.refresh)
 
         _layout = QVBoxLayout()
@@ -227,16 +224,20 @@ class DagToolBar(ToolBar):
     def __init__(self):
         ToolBar.__init__(self)
 
-        self.start_profiling = QAction('Start Profiling', self)
+        self.reset_timings = QAction(
+            QIcon(':/icons/stopwatch'), 'Reset Timings', self)
+        self.reset_timings.setStatusTip(
+            'Reset profiling timings. Equivalent to: nuke.resetProfilingTimers()')
 
-        self.reset_timings = QAction('Reset Timings', self)
-        self.clear_callbacks = QAction('Clear Callbacks', self)
+        self.clear_callbacks = QAction(
+            QIcon(':/icons/clear-all'), 'Clear Callbacks', self)
         self.clear_callbacks.setStatusTip(
-            'Clean possible leftover callbacks created from the Live profiling')
+            'Force cleaning possible leftover callbacks created from the Live profiling'
+        )
 
-        # self.addAction(self.start_profiling)
         self.addAction(self.reset_timings)
         self.addAction(self.clear_callbacks)
+        self.addAction(self._help_button)
 
 
 class DagInspector(QMainWindow):

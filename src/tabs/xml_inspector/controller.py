@@ -77,7 +77,7 @@ class FileInspectorController:
             if self.case_insensitive:
                 text = r'(?i)' + text
 
-            # FIXME: when using invalid regex will complain regex errror but still work
+            # FIXME: when using invalid regex will complain regex error but still work
             if self.filter_column in ('Name', 'Type'):
                 if re.match(text, header_label):
                     self._table.setRowHidden(i, False)

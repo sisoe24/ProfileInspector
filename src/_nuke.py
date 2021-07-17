@@ -5,6 +5,8 @@ import os
 import random
 import logging
 
+from PySide2.QtWidgets import QFileDialog
+
 
 def set_handler():
     handler = logging.FileHandler('log/nuke.log', 'w')
@@ -79,6 +81,18 @@ def showInfo(msg):
     return msg
 
 
+def getFilename(message, pattern=None, default=None, favorites=None, type=None, multiple=False):
+    file, _ = QFileDialog.getOpenFileName(filter=pattern, dir=default)
+    if file:
+        return file
+
+
+def scriptSaveAs(filename=None, overwrite=-1):
+    file, _ = QFileDialog.getSaveFileName(dir=filename)
+    if file:
+        return file
+
+
 class root:
     def name(self):
         path = 'string_placeholder_name_project.nk'
@@ -99,20 +113,20 @@ def allNodes():
         'Diff_color': 'Read',
         'Transform_Roto': 'Transform',
         'LeftAxis': 'Reconcile3D',
-        'Dot': 'Dot', 'Viewer': 'Viewer',
+        'Dot': 'Dot',
+        'Viewer': 'Viewer',
     }
 
     nodes_list = {}
     node_index = 1
 
-    while len(nodes_list) <= random.randint(15, 16):
+    while len(nodes_list) <= 15:
         node_name = random.choice(nodes.keys())
 
-        if random.randint(1, 10) % 2 == 0:
+        if random.randint(1, 10) % 2 == 0 or node_index >= 10:
             node_index = 1
 
         node_name += str(node_index)
-
         nodes_list[node_name] = nodes[node_name[:-1]]
 
         node_index += 1
@@ -208,6 +222,7 @@ def show(node, forceFloat=False):
 
 
 if __name__ == '__main__':
-
-    for i in allNodes():
-        print('name :', i.name(), '- class :', i.Class())
+    pass
+    # for x in range(100):
+    #     for i in allNodes():
+    #         print('name :', i.name(), '- class :', i.Class())

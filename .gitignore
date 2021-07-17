@@ -11,3 +11,4 @@ tasks
 .DS_Store
 *.pyc
 app.py
+.env

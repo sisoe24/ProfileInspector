@@ -4,10 +4,10 @@ from __future__ import print_function
 import logging
 
 from PySide2.QtCore import QSettings, QCoreApplication
-from PySide2.QtWidgets import QAction, QMainWindow, QTabWidget
+from PySide2.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
 from ProfileInspector.src import tabs
-from ProfileInspector.src.widgets import ErrorDialog, ToolBar
+from ProfileInspector.src.widgets import ErrorDialog
 
 
 LOGGER = logging.getLogger('ProfileInspector.main')
@@ -33,12 +33,24 @@ class MainWindowTabs(QTabWidget):
         self.addTab(tabs.NukeLauncher(), 'Other')
         self.addTab(tabs.HelpTab(), 'Help')
 
-        self.setCurrentIndex(2)
+        # self.setCurrentIndex(3)
+
+
+class MainWindowWidget(QWidget):
+    def __init__(self, *args, **kwargs):
+        QWidget.__init__(self)
+
+        _layout = QVBoxLayout()
+        _layout.addWidget(MainWindowTabs())
+
+        self.setLayout(_layout)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
+
+        self.setObjectName('MainWindow')
 
         QSettings.setDefaultFormat(QSettings.IniFormat)
         QCoreApplication.setOrganizationName('virgilsisoe')
@@ -46,7 +58,7 @@ class MainWindow(QMainWindow):
         QCoreApplication.setApplicationName('ProfileInspector')
 
         try:
-            self.tabs = MainWindowTabs()
+            self.tabs = MainWindowWidget()
         except Exception as err:
             ErrorDialog(self, str(err)).show()
             LOGGER.critical(err, exc_info=True)

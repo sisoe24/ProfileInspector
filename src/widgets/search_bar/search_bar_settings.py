@@ -26,15 +26,22 @@ class UpperSettings(QWidget):
         _layout.setMargin(0)
 
         self._zoom_when_search = QCheckBox('Zoom when searching')
+        self._zoom_when_search.setToolTip(
+            'When performing a search, it will automatically zoom on the first node that matches the search pattern.')
         self._zoom_when_search.setChecked(
             self.settings.value('zoom_search', True) == "true"
         )
         self._zoom_when_search.clicked.connect(self.update_zoom_search)
 
         self._force_float = QCheckBox('Force floating proprieties')
+        self._force_float.setToolTip(
+            'When double-clicking on a node name, the proprieties will be opened in a floating window rather than inside Proprieties panel'
+        )
+
         self._force_float.setChecked(
             self.settings.value('force_float', False) == "true"
         )
+
         self._force_float.clicked.connect(self._update_force_float)
         _layout.addWidget(self._zoom_when_search)
         _layout.addWidget(self._force_float)
@@ -64,11 +71,16 @@ class ExcludeSettings(QWidget):
         _layout.setMargin(0)
 
         self._exclude_class = QLineEdit()
+        self._exclude_class.setToolTip(
+            '<nobr>Node Types(class) to be hidden in the table view.</nobr> <br>'
+            'Names should be delimited by comma.'
+        )
         self._exclude_class.setClearButtonEnabled(True)
         # self._exclude_class.setValidator(
         #     QRegExpValidator(QRegExp('[A-Z].+'))
         # )
-        self._exclude_class.setPlaceholderText('Node types to exclude')
+        self._exclude_class.setPlaceholderText(
+            'Node types to exclude delimited by comma')
         self._exclude_class.setText(self.settings.value('exclude_nodes', ''))
         self._exclude_class.textChanged.connect(self._update_exclude_class)
 

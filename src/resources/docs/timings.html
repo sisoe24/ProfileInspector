@@ -1,0 +1,65 @@
+<html lang="en">
+
+<body>
+    <h1>Timings</h1>
+    <hr>
+    <blockquote>
+        <b>NOTE:</b> The values will be changed only inside the table.
+        The DAG values will always be set to <b>Engine</b> and <b>ms</b>. <br>
+        Also, most of the descriptions are from the official documentation so
+        please refer to it for a more in depth explanation.
+    </blockquote>
+    <hr>
+
+    <p>Change the timings format shown in the table.</p>
+
+    <dl>
+        <dt><b>Profiling type:</b></dt>
+        <dd>
+            Change the profiling type.
+            <ul>
+                <li>
+                    <b>store</b> - store the values the user has selected on its knobs.
+                </li>
+                <li>
+                    <b>validate</b> - this is where the node tells Nuke about the output it produces.
+                </li>
+                <li>
+                    <b>request</b> - his is where the node works out what data it
+                    will need from its inputs in order to produce its output
+                </li>
+                <li>
+                    <b>engine</b> - this is where the node does most of its work, and actually generates its output.
+                </li>
+            </ul>
+
+        </dd>
+        <dt><b>Call type: <b>(Not present in DAG Inspector)</b></b></dt>
+        <dd>Change the call type inside the table.
+            <ul>
+                <li>
+                    <b>callCount</b> - tells you the number of times this part of the processing has been called.
+                </li>
+                <li>
+                    <b>timeTakenWall</b> - is the time taken as it would be measured by a clock on the wall,
+                    i.e. the actual time a user would have to wait for the processing to complete.
+                </li>
+                <li>
+                    <b>timeTakenCPU</b> - On Linux, this is the time the CPU spent executing the processing code,
+                    On Mac and Windows, the CPU time is not currently available.
+                </li>
+            </ul>
+        </dd>
+        <dt><b>Timings format:</b></dt>
+        <dd>Convert the current timings from milliseconds to the chosen value.
+            <ul>
+                <li> <b>ms</b> - milliseconds</li>
+                <li> <b>s:ms</b> - seconds milliseconds</li>
+                <li> <b>m:s</b> - minutes seconds</li>
+                <li> <b>m:s:ms</b> - minutes seconds milliseconds</li>
+            </ul>
+        </dd>
+    </dl>
+</body>
+
+</html>

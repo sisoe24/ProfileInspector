@@ -14,10 +14,10 @@ from PySide2.QtWidgets import (
     QCheckBox,
     QPushButton,
     QWidget,
-    QGridLayout
+    QGridLayout,
 )
 
-from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.util import widget_color, doc_file
 from ProfileInspector.src.widgets import TimingsGroup
 
 LOGGER = logging.getLogger('ProfileInspector.dag_profiling')
@@ -27,16 +27,19 @@ class LiveGroup(QGroupBox):
     @widget_color
     def __init__(self, title='Live Updates (Experimental)'):
         QGroupBox.__init__(self, title)
+        self.setWhatsThis(doc_file('dag_live_update'))
 
         _layout = QVBoxLayout()
 
         layout_form = QFormLayout()
 
         self._toggle_live_update = QCheckBox()
+        self._toggle_live_update.setToolTip('Enable/Disable live update')
 
         self._update_by_items = QComboBox()
+        self._update_by_items.setToolTip('Change live update method')
         self._update_by_items.addItems(['updateUI', 'knobChanged'])
-        self._update_by_items.setEnabled(False)
+        self._update_by_items.setEnabled(True)
 
         layout_form.addRow(QLabel('Enable'), self._toggle_live_update)
         layout_form.addRow(QLabel('Update by:'), self._update_by_items)
@@ -44,6 +47,22 @@ class LiveGroup(QGroupBox):
         _layout.addLayout(layout_form)
 
         self.setLayout(_layout)
+
+    #     self._hover = None
+
+    # @property
+    # def hover(self):
+    #     return self._hover
+
+    # @hover.setter
+    # def hover(self, value):
+    #     self._hover = value
+
+    # def enterEvent(self, event):
+    #     self.hover._show()
+
+    # def leaveEvent(self, event):
+    #     self.hover.close()
 
     def get_update_method(self):
         return self._update_by_items
@@ -55,16 +74,13 @@ class LiveGroup(QGroupBox):
 class ButtonsLayout(QGridLayout):
     def __init__(self):
         QGridLayout.__init__(self)
-        # self.setSpacing(0)
         self.setMargin(0)
 
         self._toggle_profiling_button = QPushButton('Start Profiling')
+        self._toggle_profiling_button.setToolTip('Start/Stop profiling timers')
         self._toggle_profiling_button.setCheckable(True)
 
-        self._reset_button = QPushButton('Reset timings')
-
         self.addWidget(self._toggle_profiling_button, 0, 1, 1, 1)
-        # self.addWidget(self._reset_button, 1, 1, 1, 1)
 
     def start_profiling(self):
         return self._toggle_profiling_button
@@ -94,7 +110,6 @@ class ProfilingGroup(QGroupBox):
         self.setChecked(False)
 
         _layout = QVBoxLayout()
-        # _layout.setMargin(0)
 
         self.groups = ProfilingGroupsLayout()
         _layout.addLayout(self.groups)
@@ -107,11 +122,9 @@ class ProfilingGroup(QGroupBox):
 
 class ProfilingWidget(QWidget):
 
-    @widget_color
+    @ widget_color
     def __init__(self):
         QWidget.__init__(self)
-
-        self.setMinimumHeight(300)
 
         _layout = QVBoxLayout()
         _layout.setMargin(0)
@@ -136,6 +149,10 @@ class ProfilingWidget(QWidget):
     @ property
     def live_group(self):
         return self._live_group
+
+    @ property
+    def options_group(self):
+        return self._options_group
 
     @ property
     def start(self):

@@ -1,17 +1,34 @@
 # coding: utf-8
 from __future__ import print_function
 
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QToolBar
+from PySide2.QtCore import QSize, Qt
+from PySide2.QtGui import QIcon
+from PySide2.QtWidgets import QToolBar, QWhatsThis
 
 
 class ToolBar(QToolBar):
     def __init__(self):
         QToolBar.__init__(self)
+        self.setIconSize(QSize(15, 15))
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.setMovable(False)
 
         self.setStyleSheet('''
             color: white;
         ''')
 
-        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        self.setMovable(False)
+        self._initial_style = self.styleSheet()
+
+        self._help_button = QWhatsThis().createAction(self)
+        self._help_button.setIcon(QIcon(':/icons/question'))
+        self._help_button.setObjectName('help_btn')
+        # self._help_button.toggled.connect(self.change_background)
+        # self.addAction(self._help_button)
+
+    def change_background(self, state):
+        if state:
+            self.setStyleSheet(
+                'QToolButton#help_btn { color: rgb(241,158,0); }')
+            return
+
+        self.setStyleSheet(self._initial_style)

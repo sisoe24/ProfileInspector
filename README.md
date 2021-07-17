@@ -1,86 +1,139 @@
-# ProfileInspector
+# 1. Profile Inspector
 
-## NOTE
+A Nuke plugin that helps to visualize the application profiling information in a more convenient and user friendly manner.
 
-Application is still in early stage of development and no documentation is provided.
-Things could change in the future and major refractor is needed. Some section are present but do not yet work.
-Currently works on Nuke11, 12, 13 with the main target platform being Nuke 12. Because Nuke11 uses an early version of PySide2, future compatibility is not a priority.
+- [1. Profile Inspector](#1-profile-inspector)
+  - [1.1. Important Note](#11-important-note)
+  - [1.2. Installation](#12-installation)
+  - [1.3. Usage](#13-usage)
+  - [1.4. Overview](#14-overview)
+    - [1.4.1. Dag Inspector](#141-dag-inspector)
+    - [1.4.2. XML Inspector](#142-xml-inspector)
+    - [1.4.3. Nuke Launcher](#143-nuke-launcher)
+  - [1.5. Extras](#15-extras)
+    - [1.5.1. Live Update](#151-live-update)
+    - [1.5.2. Dock Windows](#152-dock-windows)
+    - [1.5.3. Compatibility](#153-compatibility)
 
 ---
 
-A Nuke plugin that offers some improvements reading the profile data and more.
+## 1.1. Important Note
 
-Plugin is a table view app and offers various functionally of which some of them are:
-- User friendly profiling analyzer
-- User defined custom rename functionality.
-- User defined custom buttons.
-- Standalone version of the app that works outside Nuke (useful if analyzing a lot of frames with the XML inspector and screen real estate is necessary). Binary are not yet provided but user could build the app if PySide2 package is installed. Because the standalone version uses a custom nuke module, some limitation are to be considered.
+The plugin is still in the stage of development so code is not yet documented as things could change or be moved/removed. Also readme is work in progress.
 
-## Installation
+---
 
-Copy ProfileInspector inside _.nuke_ folder and in your `menu.py` and import it: `import ProfileInspector`. The plugin should work on custom paths added by `nuke.pluginAddPath()` but it has not yet been tested.
+## 1.2. Installation
 
-## Usage
+Save the plugin in your _.nuke_ directory or in a custom directory and then `import ProfileInspector` in your _menu.py_.  
+**Remember**: If you use a custom plugin path, add the path in your init.py: `nuke.pluginAddPath('custom/path')`.
 
-Once inside Nuke, plugin can be called from the custom panels option. More documentation will be provided at a later date.
+## 1.3. Usage
 
-## Profile analyzer
+The plugin does not introduce new workflows in terms of how to use the Nuke profiling options, but to summarize:
 
-Some convenient features to read the profiling data of Nuke:
+Dag Inspector
 
-- Quickly and easily sort between nodes using regex with live feedback of results.
+- At first launch, table might be empty, so it needs to be refreshed by clicking the Refresh Table button to read all the comp nodes.
+- By clicking on **Activate Profile Section**, the plugin will also do a check for current node timers, but will likely be at 0 if the profiling hasn't been run before.
+- Start the profiling wih the Start Profiling button.
+- When the profiling is on, you can update the timers with the shortcut `U` that will trigger the image te bo recalculated.
+- At this point you can refresh the table again and save a snapshot of the current timings. (timings will be saved in the table even if you stop the profiling listener).
+- Find the node you want and tweak it (with or without [Live update](#172-live-update)).
+- Refresh the table (save snapshot) and repeat.
+
+XML Inspector
+
+- Load a xml file created with Nuke.
+- Use the table to find a specific node or a specific frame range.
+
+## 1.4. Overview
+
+> Each page offers a _What's This?_ option. This will show some additional information on certain sections.
+
+Profile Inspector offers mainly 2 modes:
+
+- The [Dag Inspector](#dag-inspector) where you can inspect the Nuke's Node Graph nodes
+- The [XML Inspector](#xml-inspector) where you can inspect the XML report file that nuke generates.
+
+It also offers a convenient way ([Nuke Launcher](#nuke-launcher)) to launch a Nuke instance with the profiling listener activated so to generate the xml report file.
+
+### 1.4.1. Dag Inspector
+
+[<img title="Dag Inspector" src="src/resources/images/dag_inspector.png" width="50%"/>](src/resources/images/dag_inspector.png)
+
+
+The dag inspector offers a table view for current dag nodes. When the profiling is activated, the table shows each node profiling timers: _callCount_, _timeTakenCpu_, _timeTakenWall_.
+
+Some of the features are:
+
+- Quickly filter current nodes using regex with live feedback of results.
+- Quickly zoom the node you are searching and open its properties panel.
 - Sort columns and identify the heaviest/lightest node.
-- Quickly update profiling return type: Engine, Requests, Store, Validate.
-- Live update (experimental): enables user to adjust node parameters and see the actual effective time cost for the current frame.
-- Profiling snapshot: save the data so profiling listener could be closed.
-- Human readable timings.
-- Import of XML profiling reports. Section shows profiling data for all of the frames and offers various other features like: Filter nodes and custom range frame.
-and more...
+- Quickly change profiling information type: _Engine_, _Requests_, _Store_, _Validate_.
+- Convert profiling timings to more human readable numbers.
+- Take a snapshot of the current timings.
+- [Live update](#live-update) (Experimental): adjust node parameters and see the actual effective time cost for the current frame.
 
-## Rename functionality
+### 1.4.2. XML Inspector
 
-> this section could be extracted into a different project in the future
+[<img title="XML Inspector" src="src/resources/images/xml_inspector.png" width="50%"/>](src/resources/images/xml_inspector.png)
 
-Plugin can also rename node/s based on user defined custom variables. This creates a dynamic renaming process based on the current node selected where user can filter nodes based on flags. Function documentation is parsed in order to extract the meta information about the variables so hopefully encouraging good coding practice!
-Some example will be already avaliable inside _src/custom/user_variables.py_:
+This section offers the ability to import the file that Nuke generates when launched with the `-Pf` arguments.
+Much like the DAG table, users can filter nodes, change the profiling timings, and so on.
 
-```python
-def _nb_project_name():
-    """Return project name of current session.
+The window can also be un-docked (see [dock windows](#dock-windows) for more info).
 
-    :symbol: $p
-    :description: project name
-    :param: nuke node object
+### 1.4.3. Nuke Launcher
 
-    """
-    return nuke.root().name()
+This section offers a convenient way to launch a new Nuke instance with the profiler listener activated.
+This will be the equivalent of launching Nuke via terminal with the `nuke.exec -Pf file.xml project.nk` arguments.
 
+Options available:
 
-def _nb_only_write(node, nodeClass="Write"):
-    """Return file path name.
+- Specify the Nuke executable to use (by default will use the one currently running the instance)
+- Specify the Nuke composition to inspect.
+- Specify the mode in which to launch Nuke (NukeX, NukeStudio, etc.)
+- Capture Nuke's new instance output in a dockable window. (see [dock windows](#dock-windows) for more info).
+- Add optional arguments to the execution.
 
-    :symbol: $f
-    :description: write node file path
-    :param: nuke node object
+## 1.5. Extras
 
-    """
-    return os.path.basename(node.toKnob('file').value())
-```
+### 1.5.1. Live Update
 
-This will create some variables (`$p`, `$f`) of which when called the will be replaced with their respective returns. `nb_only_write()` will currently work only for a write node because of the `nodeClass` flag.
-User defined functions can have optional arguments in line with nuke standards:
+This option is labeled _experimental_ because I am not entirely sure about its use cases.
 
-- `node`: effectivley `nuke.thisNode()`
-- `nodeClass`: optional flag that limits the function to specific nodes
+Coming from Substance Designer, I am used to work on a single frame and use the profiling to understand how "heavy" the node is with the current parameters settings.
 
-## User defined buttons
+But Nuke doesn't really work in that way and it keeps accumulating the timings even if the settings are turn to 0; that is, just by moving the knob parameters up and down, the timers will increment regardless if you are using 100% or 1% of a specific knob.
 
-> this section could be extracted into a different project in the future
+So the idea behind the live update is that; at each node parameter knob change, a callback will be triggered ( via either `updateUI` or `knobChanged`) and the profiling timers will reset. This will (likely) give you a representation of what the node is actually "consuming" with the current parameters settings.
 
-This section is still in early stage but will give the user the ability to create custom buttons in line with Nuke User section expectation, where they will act on the selected nodes inside the table. Because the table is able to filter nodes with realtime feedback and with the use of regex, the user should be able to more quickly execute their actions on a group of nodes.
+This can be used on a frame by frame basis to manually adjust the node knob parameters to adjust performance.
 
-## Overview
+Again, this section needs more tests and understanding so please let me know if you have some insights.
 
-![table](images/table_view.png)
-![xml](images/xml_inspector.png)
-![rename](images/rename.png)
+### 1.5.2. Dock Windows
+
+> This feature is a leftover of a prototype and will probably be removed in future updates.
+
+[<img title="Dock Window" src="src/resources/images/dock_window.png" width="500"/>](src/resources/images/dock_window.png)
+
+Much like the floating panel in nuke, certain windows can be un docked for convenience.
+
+To dock/un-dock simply double click on the window titlebar, drag the window or use the apposite buttons.
+
+### 1.5.3. Compatibility
+
+Nuke version: 11,12, 13.
+
+> Because Nuke 11 uses an early version of PySide2, future compatibility is not a guarantee.
+
+While it should work the same on all platforms, it has been currently tested only for:
+
+- Linux:
+  - Ubuntu 21.04
+- MacOS:
+  - Mojave 10.14.06
+  - Catalina 10.15.06
+- Windows 10

@@ -5,7 +5,7 @@ import os
 import logging
 
 
-from PySide2.QtCore import QSortFilterProxyModel, Qt, QRegExp, Signal
+from PySide2.QtCore import QSortFilterProxyModel, Qt, QRegExp
 from PySide2.QtGui import QIcon, QRegExpValidator, QStandardItemModel
 
 from PySide2.QtWidgets import (
@@ -20,6 +20,7 @@ from PySide2.QtWidgets import (
     QLineEdit,
     QMainWindow,
     QMessageBox,
+    QSizePolicy,
     QSpinBox,
     QStatusBar,
     QTableView,
@@ -33,7 +34,8 @@ from .util import _bypass_filedialog
 from .controller import FileInspectorController
 from .report_parser import XmlData
 
-from ProfileInspector.src.util import TimeFormatter, widget_color
+from ProfileInspector.src import nuke
+from ProfileInspector.src.util import TimeFormatter, widget_color, doc_file
 from ProfileInspector.src.widgets import (
     SearchBarWidget,
     ErrorDialog,
@@ -49,7 +51,8 @@ class InfoBox(QGroupBox):
     @widget_color
     def __init__(self, title='Info'):
         QGroupBox.__init__(self, title)
-        self.setMaximumWidth(300)
+        self.setToolTip('XML header information')
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
         _layout = QFormLayout()
         xml = XmlData()
@@ -76,10 +79,13 @@ class FramesBox(QGroupBox):
     @widget_color
     def __init__(self, title='Frames'):
         QGroupBox.__init__(self, title)
-        self.setMaximumWidth(300)
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        self.setWhatsThis(doc_file('xml_frames'))
 
         # fixed range
         self._frame_box = QSpinBox()
+        self._frame_box.setToolTip('Set fixed frame range for table view ')
+
         self._frame_box.lineEdit().setReadOnly(True)
         self._frame_box.setRange(1, 9999)
 
@@ -98,6 +104,9 @@ class FramesBox(QGroupBox):
         self._enable_custom.toggled.connect(self._set_custom_range)
 
         self._custom_line = QLineEdit()
+        self._custom_line.setToolTip(
+            'Set custom frame range for table view: e.g. 1-23'
+        )
         self._custom_line.setReadOnly(True)
 
         # TODO: Should limit numbers to maximum frames of file?
@@ -204,6 +213,7 @@ class DisplayTimings(TimingsGroup):
         self.setMaximumWidth(300)
 
         self._call_type = QComboBox()
+        self._call_type.setToolTip('Change table call type display')
         self._call_type.addItems(
             ['callCount', 'timeTakenWall', 'timeTakenCPU'])
 
@@ -314,8 +324,8 @@ class XmlTableView(QTableView):
     def __init__(self):
         QTableView.__init__(self)
         self.setSortingEnabled(True)
-        self.setStatusTip('XML Table view: each column is a frame')
 
+        self.setWhatsThis(doc_file('xml_table'))
         self._table_model = XmlTableModel()
 
         self._filter_proxy = QSortFilterProxyModel()
@@ -358,13 +368,12 @@ class DockableWidget(DockableWindow):
 class FileInspectorToolBar(ToolBar):
     def __init__(self):
         ToolBar.__init__(self)
-        # TODO: add icon
 
-        # self.load_xml = QAction(QIcon(':/icons/folder'), 'Open file...', self)
-        self.load_xml = QAction('Open file...', self)
+        self.load_xml = QAction(QIcon(':/icons/folder'), 'Open file...', self)
         self.load_xml.setStatusTip('Load XML report file to analyze')
 
         self.addAction(self.load_xml)
+        self.addAction(self._help_button)
 
 
 class FileInspectorWidget(QMainWindow):
@@ -383,11 +392,12 @@ class FileInspectorWidget(QMainWindow):
         self.setStatusBar(QStatusBar(self))
 
     def _open_file(self):
-        file, _ = QFileDialog.getOpenFileName(filter="*.xml")
-        LOGGER.debug('Parsing xml file: %s', file)
+        file = nuke.getFilename('Open xml file', '*.xml')
 
         if not file:
             return
+
+        LOGGER.debug('Parsing xml file: %s', file)
 
         try:
             XmlData.load_file(file, self)
