@@ -2,7 +2,8 @@
 from __future__ import print_function
 
 import logging
-from PySide2.QtCore import QSysInfo, __version__, QSettings
+from PySide2.QtCore import QSysInfo, Qt, __version__, QSettings
+from PySide2.QtGui import QDesktopServices
 
 from PySide2.QtWidgets import (
     QCheckBox,
@@ -30,6 +31,7 @@ class HelpForm(QWidget):
         QWidget.__init__(self)
 
         _layout = QFormLayout()
+        _layout.setFormAlignment(Qt.AlignHCenter | Qt.AlignTop)
 
         _layout.addRow(QLabel('Profile Inspector:'), QLabel(plugin_version))
         _layout.addRow(QLabel('PySide2:'), QLabel(__version__))
@@ -42,9 +44,32 @@ class HelpForm(QWidget):
         self._enable_logging.toggled.connect(self.enable_logger)
         _layout.addRow(QLabel('Show Console Logging'), self._enable_logging)
 
-        _layout.addRow(QPushButton('Readme'), QPushButton('Changelog'))
+        open_readme = QPushButton('Readme')
+        open_readme.clicked.connect(lambda: self.open_link(open_readme.text()))
+
+        open_changelog = QPushButton('Changelog')
+        open_changelog.clicked.connect(
+            lambda: self.open_link(open_changelog.text()))
+        _layout.addRow(open_readme, open_changelog)
+
+        open_issue = QPushButton('Report Issues')
+        open_issue.clicked.connect(
+            lambda: self.open_link(open_issue.text()))
+
+        _layout.addRow(open_issue, QLabel(''))
 
         self.setLayout(_layout)
+
+    def open_link(self, link):
+        gitweb = 'https://github.com/sisoe24/ProfileInspector'
+
+        links = {
+            'Readme': gitweb + '/blob/main/README.md',
+            'Changelog': gitweb + '/blob/main/CHANGELOG.md',
+            'Report Issues':  gitweb + '/issues'
+        }
+
+        QDesktopServices.openUrl(links[link])
 
     def enable_logger(self, state):
         self._enable_logging.setChecked(state)
