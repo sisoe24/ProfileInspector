@@ -62,7 +62,6 @@ It also offers a convenient way ([Nuke Launcher](#nuke-launcher)) to launch a Nu
 
 [<img title="Dag Inspector" src="src/resources/images/dag_inspector.png" width="50%"/>](src/resources/images/dag_inspector.png)
 
-
 The dag inspector offers a table view for current dag nodes. When the profiling is activated, the table shows each node profiling timers: _callCount_, _timeTakenCpu_, _timeTakenWall_.
 
 Some of the features are:
@@ -103,7 +102,7 @@ Options available:
 
 This option is labeled _experimental_ because I am not entirely sure about its use cases.
 
-Coming from Substance Designer, I am used to work on a single frame and use the profiling to understand how "heavy" the node is with the current parameters settings.
+Based on my experience with other softwares, I am used to work on a single frame and use the profiling to understand how "heavy" the node is with the current parameters settings.
 
 But Nuke doesn't really work in that way and it keeps accumulating the timings even if the settings are turn to 0; that is, just by moving the knob parameters up and down, the timers will increment regardless if you are using 100% or 1% of a specific knob.
 
