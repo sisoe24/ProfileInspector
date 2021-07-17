@@ -56,7 +56,11 @@ class HelpForm(QWidget):
         open_issue.clicked.connect(
             lambda: self.open_link(open_issue.text()))
 
-        _layout.addRow(open_issue, QLabel(''))
+        open_nukepedia = QPushButton('Nukepedia')
+        open_nukepedia.clicked.connect(
+            lambda: self.open_link(open_nukepedia.text()))
+
+        _layout.addRow(open_issue, open_nukepedia)
 
         self.setLayout(_layout)
 
@@ -66,7 +70,8 @@ class HelpForm(QWidget):
         links = {
             'Readme': gitweb + '/blob/main/README.md',
             'Changelog': gitweb + '/blob/main/CHANGELOG.md',
-            'Report Issues':  gitweb + '/issues'
+            'Report Issues':  gitweb + '/issues',
+            'Nukepedia': ''
         }
 
         QDesktopServices.openUrl(links[link])
