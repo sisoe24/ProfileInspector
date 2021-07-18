@@ -27,6 +27,7 @@ The plugin is still in the stage of development so code is not yet documented as
 
 Save the plugin in your _.nuke_ directory or in a custom directory and then `import ProfileInspector` in your _menu.py_.  
 **Remember**: If you use a custom plugin path, add the path in your init.py: `nuke.pluginAddPath('custom/path')`.
+> N.B. if your downloaded  zip folder has a different name(ProfileInspector-master, ProfileInspector-0.0.2 etc.), then you need to rename it to just ProfileInspector.
 
 ## 1.3. Usage
 
@@ -102,11 +103,11 @@ Options available:
 
 This option is labeled _experimental_ because I am not entirely sure about its use cases.
 
-Based on my experience with other softwares, I am used to work on a single frame and use the profiling to understand how "heavy" the node is with the current parameters settings.
+Based on my experience with other softwares, when I work on a single frame, I use the profiling to understand how "heavy" the something is with the current parameters settings.
 
-But Nuke doesn't really work in that way and it keeps accumulating the timings even if the settings are turn to 0; that is, just by moving the knob parameters up and down, the timers will increment regardless if you are using 100% or 1% of a specific knob.
+But Nuke doesn't really work in that way and it keeps accumulating the timings even if the settings are turn to 0, i.e., just by moving the knob parameters up and down, the timers will increment regardless if you are using 100% or 1% of a specific parameter.
 
-So the idea behind the live update is that; at each node parameter knob change, a callback will be triggered ( via either `updateUI` or `knobChanged`) and the profiling timers will reset. This will (likely) give you a representation of what the node is actually "consuming" with the current parameters settings.
+So the idea behind the live update is that; at each node parameter parameter change, a callback will be triggered (via either `updateUI` or `knobChanged`) and the profiling timers will reset. This will (likely) give you a representation of what the node is actually "consuming" with the current parameters settings.
 
 This can be used on a frame by frame basis to manually adjust the node knob parameters to adjust performance.
 
