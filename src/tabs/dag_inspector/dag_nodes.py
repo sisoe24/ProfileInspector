@@ -16,7 +16,7 @@ class DagNodes():
         self.profiling_type = profiling_type
 
         self.settings = QSettings()
-        self._exclude_nodes = self.settings.value('exclude_nodes', [])
+        self._exclude_nodes = self.settings.value('exclude_nodes', "")
         self._exclude_nodes = self._exclude_nodes.replace(',', '').split(' ')
 
         self.nodes_list = self._create_list()
