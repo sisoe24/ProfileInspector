@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import logging
-from PySide2.QtCore import QSysInfo, Qt, __version__, QSettings
+from PySide2.QtCore import Qt
 from PySide2.QtGui import QDesktopServices
 
 from PySide2.QtWidgets import (
@@ -14,8 +14,7 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
-from ProfileInspector.src import __version__ as plugin_version
-from ProfileInspector.src import nuke
+from ProfileInspector.src import __about__
 
 LOGGER = logging.getLogger('ProfileInspector.help_tab')
 
@@ -33,11 +32,13 @@ class HelpForm(QWidget):
         _layout = QFormLayout()
         _layout.setFormAlignment(Qt.AlignHCenter | Qt.AlignTop)
 
-        _layout.addRow(QLabel('Profile Inspector:'), QLabel(plugin_version))
-        _layout.addRow(QLabel('PySide2:'), QLabel(__version__))
-        _layout.addRow(QLabel('Nuke:'), QLabel(nuke.NUKE_VERSION_STRING))
+        _layout.addRow(QLabel('Profile Inspector:'),
+                       QLabel(__about__['ProfileInspector']))
 
-        self._machine_info = QLabel(QSysInfo().prettyProductName())
+        _layout.addRow(QLabel('PySide2:'), QLabel(__about__['PySide2']))
+        _layout.addRow(QLabel('Nuke:'), QLabel(__about__['Nuke']))
+
+        self._machine_info = QLabel(__about__['machine'])
         _layout.addRow(QLabel('System:'), self._machine_info)
 
         self._enable_logging = QCheckBox()
