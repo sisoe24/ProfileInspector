@@ -30,15 +30,3 @@ class ToolBar(QToolBar):
 
         self._help_button = _whats_this.createAction(self)
         self._help_button.setIcon(QIcon(':/icons/question'))
-
-        # self._help_button.setObjectName('help_btn')
-        # self._help_button.toggled.connect(self.change_background)
-        # self.addAction(self._help_button)
-
-    def change_background(self, state):
-        if state:
-            self.setStyleSheet(
-                'QToolButton#help_btn { color: rgb(241,158,0); }')
-            return
-
-        self.setStyleSheet(self._initial_style)
