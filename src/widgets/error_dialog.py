@@ -71,7 +71,7 @@ class ErrorDialog(QMessageBox):
             clipboard.setText(generate_report(self.traceback_msg))
 
             QDesktopServices.openUrl(
-                'https://github.com/sisoe24/PodcastTool/issues/new?assignees=&labels=&template=bug_report.md&title=')
+                'https://github.com/sisoe24/ProfileInspector/issues/new?assignees=sisoe24&labels=&template=bug_report.md&title= ')
 
         elif button.text() == 'Help':
             pass
