@@ -21,8 +21,9 @@ BASE_FORMAT = logging.Formatter(
 
 def set_critical():
     critical = logging.FileHandler(os.path.join(LOG_PATH, 'errors.log'), 'w')
-    critical.setLevel(logging.WARNING)
+    critical.setLevel(logging.ERROR)
     critical.setFormatter(BASE_FORMAT)
+    critical.set_name('Critical')
     return critical
 
 
