@@ -7,6 +7,7 @@ tasks
 log
 code
 tasks
+dist
 
 # files
 .DS_Store
