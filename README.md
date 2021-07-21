@@ -129,10 +129,11 @@ Nuke version: 11,12, 13.
 
 > Because Nuke 11 uses an early version of PySide2, future compatibility is not a guarantee.
 
-While it should work the same on all platforms, it has been currently tested only for:
+While it should work the same on all platforms, it has been currently only tested on:
 
 - Linux:
   - Ubuntu 21.04
+  - CentOS 8
 - MacOS:
   - Mojave 10.14.06
   - Catalina 10.15.06
