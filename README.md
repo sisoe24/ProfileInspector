@@ -27,7 +27,7 @@ The plugin is still in the stage of development so code is not yet documented as
 
 Save the plugin in your _.nuke_ directory or in a custom directory and then `import ProfileInspector` in your _menu.py_.  
 **Remember**: If you use a custom plugin path, add the path in your init.py: `nuke.pluginAddPath('custom/path')`.
-> N.B. if your downloaded  zip folder has a different name(ProfileInspector-master, ProfileInspector-0.0.2 etc.), then you need to rename it to just ProfileInspector.
+> N.B. if your downloaded  zip folder has a different name (_ProfileInspector-master, ProfileInspector-0.0.2 etc._), then you **need to rename it to just ProfileInspector**.
 
 ## 1.3. Usage
 
@@ -35,13 +35,12 @@ The plugin does not introduce new workflows in terms of how to use the Nuke prof
 
 Dag Inspector
 
-- At first launch, table might be empty, so it needs to be refreshed by clicking the Refresh Table button to read all the comp nodes.
+- At first launch, table could be empty, so it needs to be refreshed by clicking the **Refresh Table** button.
 - By clicking on **Activate Profile Section**, the plugin will also do a check for current node timers, but will likely be at 0 if the profiling hasn't been run before.
 - Start the profiling wih the Start Profiling button.
-- When the profiling is on, you can update the timers with the shortcut `U` that will trigger the image te bo recalculated.
+- When the profiling is on, you can update the timers with the shortcut **U** that will trigger the image te bo recalculated.
 - At this point you can refresh the table again and save a snapshot of the current timings. (timings will be saved in the table even if you stop the profiling listener).
 - Find the node you want and tweak it (with or without [Live update](#172-live-update)).
-- Refresh the table (save snapshot) and repeat.
 
 XML Inspector
 
@@ -61,7 +60,7 @@ It also offers a convenient way ([Nuke Launcher](#nuke-launcher)) to launch a Nu
 
 ### 1.4.1. Dag Inspector
 
-[<img title="Dag Inspector" src="src/resources/images/dag_inspector.png" width="50%"/>](src/resources/images/dag_inspector.png)
+<img title="Dag Inspector" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dag_inspector.png" width="50%"/>
 
 The dag inspector offers a table view for current dag nodes. When the profiling is activated, the table shows each node profiling timers: _callCount_, _timeTakenCpu_, _timeTakenWall_.
 
@@ -77,7 +76,7 @@ Some of the features are:
 
 ### 1.4.2. XML Inspector
 
-[<img title="XML Inspector" src="src/resources/images/xml_inspector.png" width="50%"/>](src/resources/images/xml_inspector.png)
+<img title="XML Inspector" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/xml_inspector.png" width="50%"/>
 
 This section offers the ability to import the file that Nuke generates when launched with the `-Pf` arguments.
 Much like the DAG table, users can filter nodes, change the profiling timings, and so on.
@@ -117,7 +116,7 @@ Again, this section needs more tests and understanding so please let me know if 
 
 > This feature is a leftover of a prototype and will probably be removed in future updates.
 
-[<img title="Dock Window" src="src/resources/images/dock_window.png" width="500"/>](src/resources/images/dock_window.png)
+<img title="Dock Window" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dock_window.png" width="90%"/>
 
 Much like the floating panel in nuke, certain windows can be un docked for convenience.
 
