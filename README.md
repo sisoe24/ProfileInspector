@@ -29,6 +29,8 @@ Save the plugin in your _.nuke_ directory or in a custom directory and then `imp
 **Remember**: If you use a custom plugin path, add the path in your init.py: `nuke.pluginAddPath('custom/path')`.
 > N.B. if your downloaded  zip folder has a different name (_ProfileInspector-master, ProfileInspector-0.0.2 etc._), then you **need to rename it to just ProfileInspector**.
 
+Once done it can be found inside a panel -> Windows -> Custom -> ProfileInspector.
+
 ## 1.3. Usage
 
 The plugin does not introduce new workflows in terms of how to use the Nuke profiling options, but to summarize:

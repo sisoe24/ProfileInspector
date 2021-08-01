@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="1-profile-inspector">1. Profile Inspector</h1>
+<p>A Nuke plugin that helps to visualize the application profiling information in a more convenient and user friendly manner.</p>
+<ul>
+<li><a href="#1-profile-inspector">1. Profile Inspector</a>
+<ul>
+<li><a href="#11-important-note">1.1. Important Note</a></li>
+<li><a href="#12-installation">1.2. Installation</a></li>
+<li><a href="#13-usage">1.3. Usage</a></li>
+<li><a href="#14-overview">1.4. Overview</a>
+<ul>
+<li><a href="#141-dag-inspector">1.4.1. Dag Inspector</a></li>
+<li><a href="#142-xml-inspector">1.4.2. XML Inspector</a></li>
+<li><a href="#143-nuke-launcher">1.4.3. Nuke Launcher</a></li>
+</ul>
+</li>
+<li><a href="#15-extras">1.5. Extras</a>
+<ul>
+<li><a href="#151-live-update">1.5.1. Live Update</a></li>
+<li><a href="#152-dock-windows">1.5.2. Dock Windows</a></li>
+<li><a href="#153-compatibility">1.5.3. Compatibility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="11-important-note">1.1. Important Note</h2>
+<p>The plugin is still in the stage of development so code is not yet documented as things could change or be moved/removed. Also readme is work in progress.</p>
+<hr>
+<h2 id="12-installation">1.2. Installation</h2>
+<p>Save the plugin in your <em>.nuke</em> directory or in a custom directory and then <code>import ProfileInspector</code> in your <em>menu.py</em>.<br>
+<strong>Remember</strong>: If you use a custom plugin path, add the path in your init.py: <code>nuke.pluginAddPath('custom/path')</code>.</p>
+<blockquote>
+<p>N.B. if your downloaded  zip folder has a different name (<em>ProfileInspector-master, ProfileInspector-0.0.2 etc.</em>), then you <strong>need to rename it to just ProfileInspector</strong>.</p>
+</blockquote>
+<p>Once done it can be found inside a panel -&gt; Windows -&gt; Custom -&gt; ProfileInspector.</p>
+<h2 id="13-usage">1.3. Usage</h2>
+<p>The plugin does not introduce new workflows in terms of how to use the Nuke profiling options, but to summarize:</p>
+<p>Dag Inspector</p>
+<ul>
+<li>At first launch, table could be empty, so it needs to be refreshed by clicking the <strong>Refresh Table</strong> button.</li>
+<li>By clicking on <strong>Activate Profile Section</strong>, the plugin will also do a check for current node timers, but will likely be at 0 if the profiling hasn't been run before.</li>
+<li>Start the profiling wih the Start Profiling button.</li>
+<li>When the profiling is on, you can update the timers with the shortcut <strong>U</strong> that will trigger the image te bo recalculated.</li>
+<li>At this point you can refresh the table again and save a snapshot of the current timings. (timings will be saved in the table even if you stop the profiling listener).</li>
+<li>Find the node you want and tweak it (with or without <a href="#172-live-update">Live update</a>).</li>
+</ul>
+<p>XML Inspector</p>
+<ul>
+<li>Load a xml file created with Nuke.</li>
+<li>Use the table to find a specific node or a specific frame range.</li>
+</ul>
+<h2 id="14-overview">1.4. Overview</h2>
+<blockquote>
+<p>Each page offers a <em>What's This?</em> option. This will show some additional information on certain sections.</p>
+</blockquote>
+<p>Profile Inspector offers mainly 2 modes:</p>
+<ul>
+<li>The <a href="#dag-inspector">Dag Inspector</a> where you can inspect the Nuke's Node Graph nodes</li>
+<li>The <a href="#xml-inspector">XML Inspector</a> where you can inspect the XML report file that nuke generates.</li>
+</ul>
+<p>It also offers a convenient way (<a href="#nuke-launcher">Nuke Launcher</a>) to launch a Nuke instance with the profiling listener activated so to generate the xml report file.</p>
+<h3 id="141-dag-inspector">1.4.1. Dag Inspector</h3>
+<img title="Dag Inspector" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dag_inspector.png" width="50%"/>
+<p>The dag inspector offers a table view for current dag nodes. When the profiling is activated, the table shows each node profiling timers: <em>callCount</em>, <em>timeTakenCpu</em>, <em>timeTakenWall</em>.</p>
+<p>Some of the features are:</p>
+<ul>
+<li>Quickly filter current nodes using regex with live feedback of results.</li>
+<li>Quickly zoom the node you are searching and open its properties panel.</li>
+<li>Sort columns and identify the heaviest/lightest node.</li>
+<li>Quickly change profiling information type: <em>Engine</em>, <em>Requests</em>, <em>Store</em>, <em>Validate</em>.</li>
+<li>Convert profiling timings to more human readable numbers.</li>
+<li>Take a snapshot of the current timings.</li>
+<li><a href="#live-update">Live update</a> (Experimental): adjust node parameters and see the actual effective time cost for the current frame.</li>
+</ul>
+<h3 id="142-xml-inspector">1.4.2. XML Inspector</h3>
+<img title="XML Inspector" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/xml_inspector.png" width="50%"/>
+<p>This section offers the ability to import the file that Nuke generates when launched with the <code>-Pf</code> arguments.
+Much like the DAG table, users can filter nodes, change the profiling timings, and so on.</p>
+<p>The window can also be un-docked (see <a href="#dock-windows">dock windows</a> for more info).</p>
+<h3 id="143-nuke-launcher">1.4.3. Nuke Launcher</h3>
+<p>This section offers a convenient way to launch a new Nuke instance with the profiler listener activated.
+This will be the equivalent of launching Nuke via terminal with the <code>nuke.exec -Pf file.xml project.nk</code> arguments.</p>
+<p>Options available:</p>
+<ul>
+<li>Specify the Nuke executable to use (by default will use the one currently running the instance)</li>
+<li>Specify the Nuke composition to inspect.</li>
+<li>Specify the mode in which to launch Nuke (NukeX, NukeStudio, etc.)</li>
+<li>Capture Nuke's new instance output in a dockable window. (see <a href="#dock-windows">dock windows</a> for more info).</li>
+<li>Add optional arguments to the execution.</li>
+</ul>
+<h2 id="15-extras">1.5. Extras</h2>
+<h3 id="151-live-update">1.5.1. Live Update</h3>
+<p>This option is labeled <em>experimental</em> because I am not entirely sure about its use cases.</p>
+<p>Based on my experience with other softwares, when I work on a single frame, I use the profiling to understand how &quot;heavy&quot; the something is with the current parameters settings.</p>
+<p>But Nuke doesn't really work in that way and it keeps accumulating the timings even if the settings are turn to 0, i.e., just by moving the knob parameters up and down, the timers will increment regardless if you are using 100% or 1% of a specific parameter.</p>
+<p>So the idea behind the live update is that; at each node parameter parameter change, a callback will be triggered (via either <code>updateUI</code> or <code>knobChanged</code>) and the profiling timers will reset. This will (likely) give you a representation of what the node is actually &quot;consuming&quot; with the current parameters settings.</p>
+<p>This can be used on a frame by frame basis to manually adjust the node knob parameters to adjust performance.</p>
+<p>Again, this section needs more tests and understanding so please let me know if you have some insights.</p>
+<h3 id="152-dock-windows">1.5.2. Dock Windows</h3>
+<blockquote>
+<p>This feature is a leftover of a prototype and will probably be removed in future updates.</p>
+</blockquote>
+<img title="Dock Window" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dock_window.png" width="90%"/>
+<p>Much like the floating panel in nuke, certain windows can be un docked for convenience.</p>
+<p>To dock/un-dock simply double click on the window titlebar, drag the window or use the apposite buttons.</p>
+<h3 id="153-compatibility">1.5.3. Compatibility</h3>
+<p>Nuke version: 11,12, 13.</p>
+<blockquote>
+<p>Because Nuke 11 uses an early version of PySide2, future compatibility is not a guarantee.</p>
+</blockquote>
+<p>While it should work the same on all platforms, it has been currently only tested on:</p>
+<ul>
+<li>Linux:
+<ul>
+<li>Ubuntu 21.04</li>
+<li>CentOS 8</li>
+</ul>
+</li>
+<li>MacOS:
+<ul>
+<li>Mojave 10.14.06</li>
+<li>Catalina 10.15.06</li>
+</ul>
+</li>
+<li>Windows 10</li>
+</ul>
+
+</body>
+</html>
