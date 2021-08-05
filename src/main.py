@@ -7,6 +7,7 @@ from PySide2.QtCore import QSettings, QCoreApplication
 from PySide2.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
 from ProfileInspector.src import tabs
+from ProfileInspector.src.about import get_about_key
 from ProfileInspector.src.widgets import ErrorDialog, AboutWidget
 
 
@@ -54,7 +55,7 @@ class MainWindow(QMainWindow):
 
         QSettings.setDefaultFormat(QSettings.IniFormat)
         QCoreApplication.setOrganizationName('virgilsisoe')
-        # QCoreApplication.setOrganizationDomain('github.com')
+        QCoreApplication.setOrganizationDomain(get_about_key('Github'))
         QCoreApplication.setApplicationName('ProfileInspector')
 
         try:
