@@ -46,10 +46,10 @@ class TimingsGroup(QGroupBox):
 
         self.setLayout(self.form_layout)
 
-    @ property
+    @property
     def timings_format(self):
         return self.combobox_timings_format
 
-    @ property
+    @property
     def profiling_type(self):
         return self.combobox_profiling_type

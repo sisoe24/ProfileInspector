@@ -179,11 +179,11 @@ class FramesBox(QGroupBox):
         self._custom_line.setReadOnly(not value)
         self._frame_box.setReadOnly(value)
 
-    @ property
+    @property
     def value(self):
         return self._frame_box
 
-    @ property
+    @property
     def custom_range(self):
         return self._custom_line
 
@@ -220,7 +220,7 @@ class DisplayTimings(TimingsGroup):
 
         self.form_layout.insertRow(1, QLabel('Call type:'), self._call_type)
 
-    @ property
+    @property
     def call_type(self):
         return self._call_type
 
@@ -287,29 +287,29 @@ class XmlTableModel(QStandardItemModel):
             node_name = self._xml_data._nodes[index.row()]
             return node_name
 
-    @ property
+    @property
     def time_format(self):
         return self._time_format
 
-    @ time_format.setter
+    @time_format.setter
     def time_format(self, value):
         LOGGER.debug('setting time format to: %s', value)
         self._time_format = value
 
-    @ property
+    @property
     def profile_type(self):
         return self._profile_type
 
-    @ profile_type.setter
+    @profile_type.setter
     def profile_type(self, value):
         LOGGER.debug('setting profile type to: %s', value)
         self._profile_type = value
 
-    @ property
+    @property
     def timings_type(self):
         return self._timings_type
 
-    @ timings_type.setter
+    @timings_type.setter
     def timings_type(self, value):
         LOGGER.debug('setting timings type to: %s', value)
         self._timings_type = value

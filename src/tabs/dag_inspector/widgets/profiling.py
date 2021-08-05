@@ -123,7 +123,7 @@ class ProfilingGroup(QGroupBox):
 
 class ProfilingWidget(QWidget):
 
-    @ widget_color
+    @widget_color
     def __init__(self):
         QWidget.__init__(self)
 
@@ -139,45 +139,45 @@ class ProfilingWidget(QWidget):
         _layout.addWidget(self._profiling_group)
         self.setLayout(_layout)
 
-    @ property
+    @property
     def format_time_changed(self):
         return self._options_group.combobox_timings_format.currentTextChanged
 
-    @ property
+    @property
     def type_changed(self):
         return self._options_group.profiling_type.currentIndexChanged
 
-    @ property
+    @property
     def live_group(self):
         return self._live_group
 
-    @ property
+    @property
     def options_group(self):
         return self._options_group
 
-    @ property
+    @property
     def start(self):
         return self._buttons.start_profiling()
 
-    @ property
+    @property
     def reset(self):
         return self._buttons.reset_timings()
 
-    @ property
+    @property
     def change_update(self):
         return self._live_group._update_by_items
 
     def get_update_method(self):
         return self._live_group._update_by_items.currentText()
 
-    @ property
+    @property
     def update_method_changed(self):
         return self._live_group._update_by_items.currentIndexChanged
 
-    @ property
+    @property
     def enable_live(self):
         return self._live_group._toggle_live_update
 
-    @ property
+    @property
     def toggled(self):
         return self._profiling_group.toggled

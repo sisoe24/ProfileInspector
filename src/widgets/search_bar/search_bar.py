@@ -153,15 +153,15 @@ class SearchBarWidget(QWidget):
     def clear(self):
         self._search_bar.clear()
 
-    @ property
+    @property
     def search_by_column(self):
         return self._search_column.currentIndexChanged
 
-    @ property
+    @property
     def return_pressed(self):
         return self._search_bar.returnPressed
 
-    @ property
+    @property
     def text_changed(self):
         return self._search_bar.textChanged
 
@@ -177,14 +177,14 @@ class SearchBarWidget(QWidget):
     def search_whole_word(self):
         return self._search_bar.search_whole_word()
 
-    @ property
+    @property
     def whole_word(self):
         return self._search_bar.toggle_word_match()
 
-    @ property
+    @property
     def case_sensitive(self):
         return self._search_bar.toggle_case_sensitive()
 
-    @ property
+    @property
     def rename(self):
         return self.btn_section.rename()

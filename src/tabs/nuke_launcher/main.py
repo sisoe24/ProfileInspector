@@ -229,22 +229,22 @@ class NukeLauncher(QMainWindow):
     def show_message(self, msg, timeout=5000):
         self.status_bar.showMessage(msg, timeout)
 
-    @ property
+    @property
     def dock_widget(self):
         return self._output_dialog
 
-    @ property
+    @property
     def output_dialog(self):
         return self._output_dialog.capture_output
 
-    @ property
+    @property
     def launch_app(self):
         return self._launcher_group._launch_app
 
-    @ property
+    @property
     def nuke_info(self):
         return self._launcher_group._upper_widgets.nuke_info
 
-    @ property
+    @property
     def output_options(self):
         return self._launcher_group._upper_widgets.output_options

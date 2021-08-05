@@ -69,7 +69,7 @@ class XmlData:
     _file = ""
     _nodes = {}
 
-    @ classmethod
+    @classmethod
     def load_file(cls, file, parent):
         error_status = ""
         try:
@@ -103,7 +103,7 @@ class XmlData:
     def file_name(self):
         return os.path.basename(self._file)
 
-    @ property
+    @property
     def root(self):
         return self._xml
 

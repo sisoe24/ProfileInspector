@@ -261,18 +261,18 @@ class DagInspector(QMainWindow):
     def show_message(self, message, timeout=5000):
         return self.status_bar.showMessage(message, timeout)
 
-    @ property
+    @property
     def profiling_section(self):
         return self.dag_page.profiling_section
 
-    @ property
+    @property
     def search_bar(self):
         return self.dag_page.search_bar
 
-    @ property
+    @property
     def table_view(self):
         return self.dag_page.table_view
 
-    @ property
+    @property
     def table_model(self):
         return self.dag_page.table_view.table_model
