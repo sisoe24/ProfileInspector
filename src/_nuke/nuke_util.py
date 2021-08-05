@@ -1,4 +1,4 @@
-from . import _nuke as nuke
+from src import nuke
 
 
 def zoom_node(node):
