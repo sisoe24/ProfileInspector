@@ -15,8 +15,8 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
-from ProfileInspector.src.about import about, about_links
-from ProfileInspector.src.util import widget_color
+from src.about import about, about_links
+from src.util import widget_color
 
 LOGGER = logging.getLogger('ProfileInspector.help_tab')
 

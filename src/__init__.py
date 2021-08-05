@@ -5,8 +5,8 @@ import sys
 import logging
 
 
-from ProfileInspector.src import logger
-from ProfileInspector.src import resources
+from src import logger
+from src import resources
 
 LOGGER = logging.getLogger('ProfileInspector.init')
 try:

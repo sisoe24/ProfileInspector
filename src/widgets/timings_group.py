@@ -10,8 +10,8 @@ from PySide2.QtWidgets import (
 )
 
 
-from ProfileInspector.src.util import widget_color
-from ProfileInspector.src.resources import whats_this_doc
+from src.util import widget_color
+from src.resources import whats_this_doc
 
 
 class TimingsGroup(QGroupBox):

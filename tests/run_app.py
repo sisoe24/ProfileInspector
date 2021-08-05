@@ -10,7 +10,7 @@ from PySide2.QtWidgets import (
 )
 
 
-from ProfileInspector.src.main import MainWindow
+from src.main import MainWindow
 
 
 # personal screen where I test the app view

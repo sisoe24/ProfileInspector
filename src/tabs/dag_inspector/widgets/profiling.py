@@ -17,9 +17,9 @@ from PySide2.QtWidgets import (
     QGridLayout,
 )
 
-from ProfileInspector.src.util import widget_color
-from ProfileInspector.src.widgets import TimingsGroup
-from ProfileInspector.src.resources import whats_this_doc
+from src.util import widget_color
+from src.widgets import TimingsGroup
+from src.resources import whats_this_doc
 
 LOGGER = logging.getLogger('ProfileInspector.dag_profiling')
 

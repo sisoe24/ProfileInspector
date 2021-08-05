@@ -2,7 +2,7 @@
 from __future__ import print_function
 import logging
 
-from ProfileInspector.src import nuke
+from src import nuke
 LOGGER = logging.getLogger('ProfileInspector.profiling_controller')
 
 
