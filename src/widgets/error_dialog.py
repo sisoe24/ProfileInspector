@@ -8,32 +8,28 @@ from PySide2.QtGui import QClipboard, QDesktopServices
 from PySide2.QtWidgets import QMessageBox
 
 
-from ProfileInspector.src import __about__
+from ProfileInspector.src.about import about_to_string, get_about_key
+
 
 LOGGER = logging.getLogger('ProfileInspector.error_dialog')
 
 
-def append_machine_info(machine):
+def prepare_report(about_str):
+    """Prepare report when user wants to report bug to github and
+    insert about information to log critical file.
 
-    for i in LOGGER.parent.handlers:
-        if i.name == 'Critical':
+    Args:
+        about (str): package/machine information from package.src.about
+    """
+    for logger in LOGGER.parent.handlers:
+        if logger.name == 'Critical':
 
-            with open(i.baseFilename, 'r+') as f:
-                content = f.read()
-                f.seek(0, 0)
-                f.write(machine + '\n' + content)
+            with open(logger.baseFilename, 'r+') as file:
+                content = file.read()
+                file.seek(0, 0)
+                file.write(about_str + '\n' + content)
 
-
-def machine_info_string():
-    machine = ''
-    for k, v in __about__.items():
-        machine += '%s: %s\n' % (k, v)
-    append_machine_info(machine)
-    return machine
-
-
-def generate_report(trace):
-    report = machine_info_string() + trace
+    report = about_to_string()
     return report
 
 
@@ -68,10 +64,9 @@ class ErrorDialog(QMessageBox):
             q.exec_()
 
             clipboard = QClipboard()
-            clipboard.setText(generate_report(self.traceback_msg))
+            clipboard.setText(prepare_report(self.traceback_msg))
 
-            QDesktopServices.openUrl(
-                'https://github.com/sisoe24/ProfileInspector/issues/new?assignees=sisoe24&labels=&template=bug_report.md&title= ')
+            QDesktopServices.openUrl(get_about_key('Issues'))
 
         elif button.text() == 'Help':
             pass
