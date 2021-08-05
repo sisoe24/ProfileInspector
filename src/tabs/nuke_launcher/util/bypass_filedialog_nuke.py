@@ -5,7 +5,7 @@ import os
 
 
 def file(path):
-    return os.path.join(os.getenv('PWD'), path)
+    return os.path.join(os.getenv('PWD'), 'other', path)
 
 
 def _bypass_filedialog(func):
@@ -15,11 +15,8 @@ def _bypass_filedialog(func):
 
         func(self, view)
 
-        if not os.getenv('_TEST_ENV') == '1':
-            return
-
-        self.nuke_info.nuke_comp.setText(file('other/test_project.kw'))
-        self.nuke_info.file_label.setText(file('other/profiling_test.xml'))
-        self.launch_app.setEnabled(True)
+        if os.getenv('TEST_ENV') == '1':
+            self.nuke_info.nuke_comp.setText(file('test_project.kw'))
+            self.nuke_info.file_label.setText(file('profiling_test.xml'))
 
     return inner_wrapper
