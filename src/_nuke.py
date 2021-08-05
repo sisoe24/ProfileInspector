@@ -9,7 +9,8 @@ from PySide2.QtWidgets import QFileDialog
 
 
 def set_handler():
-    handler = logging.FileHandler('log/nuke.log', 'w')
+    log_path = os.path.join(os.path.dirname(__file__), 'log', 'nuke.log')
+    handler = logging.FileHandler(log_path, 'w')
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(logging.Formatter(
         '%(levelname)-8s %(funcName)-25s L:%(lineno)-3s :: %(message)s'
