@@ -1,12 +1,11 @@
 # coding: utf-8
-from __future__ import print_function
+from __future__ import print_function, with_statement
 
+import os
 from os.path import (
     basename, join, exists, dirname, abspath
 )
 
-from subprocess import check_output
-from collections import OrderedDict
 
 from PySide2 import __version__ as PySide2_Version
 from PySide2.QtCore import __version__ as QtCore_version
@@ -16,16 +15,13 @@ from PySide2.QtCore import QSysInfo
 def get_git_branch():
     """Get git branch name if any."""
     branch = ""
-    try:
-        # git > 2.22 could do 'git branch --show-current'
-        branch = check_output(
-            ['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
 
-    # No git installed or project downloaded as a .zip
-    except Exception:
-        pass
+    head_file = os.path.join(_get_root(), '.git', 'HEAD')
+    if os.path.exists(head_file):
+        with open(head_file) as file:
+            branch = file.read().split('/')[-1]
 
-    return branch.decode('utf-8').strip()
+    return branch.strip()
 
 
 def _get_root():
@@ -64,7 +60,7 @@ def about():
         ('PySide2', PySide2_Version),
         ('PySide2.QtCore', QtCore_version),
         ('Machine', QSysInfo().prettyProductName()),
-        ('Build', get_git_branch()),
+        ('Branch', get_git_branch()),
         ('Other', '')
     )
 
