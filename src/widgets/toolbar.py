@@ -28,5 +28,5 @@ class ToolBar(QToolBar):
         else:
             _whats_this = QWhatsThis()
 
-        self._help_button = _whats_this.createAction(self)
-        self._help_button.setIcon(QIcon(':/icons/question'))
+        self._whats_this_btn = _whats_this.createAction(self)
+        self._whats_this_btn.setIcon(QIcon(':/icons/question'))

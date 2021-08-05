@@ -373,7 +373,7 @@ class FileInspectorToolBar(ToolBar):
         self.load_xml.setStatusTip('Load XML report file to analyze')
 
         self.addAction(self.load_xml)
-        self.addAction(self._help_button)
+        self.addAction(self._whats_this_btn)
 
 
 class FileInspectorWidget(QMainWindow):

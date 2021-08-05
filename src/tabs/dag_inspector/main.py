@@ -237,7 +237,7 @@ class DagToolBar(ToolBar):
 
         self.addAction(self.reset_timings)
         self.addAction(self.clear_callbacks)
-        self.addAction(self._help_button)
+        self.addAction(self._whats_this_btn)
 
 
 class DagInspector(QMainWindow):

@@ -202,7 +202,7 @@ class LauncherMainGroup(QGroupBox):
 class NukeLauncherToolBar(ToolBar):
     def __init__(self, *args, **kwargs):
         ToolBar.__init__(self)
-        self.addAction(self._help_button)
+        self.addAction(self._whats_this_btn)
 
 
 class NukeLauncher(QMainWindow):
