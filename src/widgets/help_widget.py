@@ -17,7 +17,7 @@ from ProfileInspector.src.about import about, about_links
 LOGGER = logging.getLogger('ProfileInspector.help_tab')
 
 
-class HelpWidget(QWidget):
+class AboutWidget(QWidget):
     def __init__(self,):
         QWidget.__init__(self)
 

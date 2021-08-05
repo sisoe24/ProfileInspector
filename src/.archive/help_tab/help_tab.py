@@ -9,7 +9,7 @@ from PySide2.QtWidgets import (
     QMainWindow,
 )
 
-from ProfileInspector.src.widgets import HelpWidget
+from ProfileInspector.src.widgets import AboutWidget
 
 LOGGER = logging.getLogger('ProfileInspector.help_tab')
 
@@ -20,9 +20,9 @@ def get_log_handler(name):
             return handler
 
 
-class _HelpWidget(HelpWidget):
+class _AboutWidget(AboutWidget):
     def __init__(self,):
-        HelpWidget.__init__(self)
+        AboutWidget.__init__(self)
         # XXX: dont think I am going to include the show logger
 
         self._enable_logging = QCheckBox()
@@ -48,4 +48,4 @@ class HelpTab(QMainWindow):
     def __init__(self, *args, **kwargs):
         QMainWindow.__init__(self)
 
-        self.setCentralWidget(_HelpWidget())
+        self.setCentralWidget(_AboutWidget())

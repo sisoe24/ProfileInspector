@@ -3,7 +3,7 @@ from __future__ import print_function
 
 from PySide2.QtCore import QSize, Qt
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QToolBar, QWhatsThis
+from PySide2.QtWidgets import QAction, QToolBar, QWhatsThis
 
 from ProfileInspector.src import nuke
 

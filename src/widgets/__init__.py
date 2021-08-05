@@ -3,4 +3,4 @@ from .timings_group import TimingsGroup
 from .dockable_window import DockableWindow
 from .error_dialog import ErrorDialog
 from .toolbar import ToolBar
-from .help_widget import HelpWidget
+from .help_widget import AboutWidget
