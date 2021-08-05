@@ -5,8 +5,8 @@ import sys
 import logging
 
 
-from src import logger
-from src import resources
+from . import logger
+from . import resources
 
 LOGGER = logging.getLogger('ProfileInspector.init')
 try:
@@ -20,3 +20,5 @@ except ImportError as error:
     except Exception as error:
         LOGGER.critical(error, exc_info=True)
         sys.exit()
+else:
+    from . import main
