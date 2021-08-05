@@ -34,15 +34,15 @@ class MainWindowTabs(QTabWidget):
         self.addTab(tabs.NukeLauncher(), 'Other')
         self.addTab(AboutWidget(), 'About')
 
-        # self.setCurrentIndex(3)
-
 
 class MainWindowWidget(QWidget):
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         QWidget.__init__(self)
 
+        self._tabs = MainWindowTabs()
+
         _layout = QVBoxLayout()
-        _layout.addWidget(MainWindowTabs())
+        _layout.addWidget(self._tabs)
 
         self.setLayout(_layout)
 
@@ -59,9 +59,9 @@ class MainWindow(QMainWindow):
         QCoreApplication.setApplicationName('ProfileInspector')
 
         try:
-            self.tabs = MainWindowWidget()
+            self.main_window = MainWindowWidget()
         except Exception as err:
             ErrorDialog(self, str(err)).show()
             LOGGER.critical(err, exc_info=True)
         else:
-            self.setCentralWidget(self.tabs)
+            self.setCentralWidget(self.main_window)

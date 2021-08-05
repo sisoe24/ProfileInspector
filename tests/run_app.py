@@ -9,9 +9,11 @@ from PySide2.QtWidgets import (
     QMainWindow,
 )
 
+
 from ProfileInspector.src.main import MainWindow
 
 
+# personal screen where I test the app view
 screen_loc = {
     'hp': {
         'x': -1077.296875,
@@ -31,7 +33,15 @@ class TestMainWindow(QMainWindow):
                          screen_loc['hp']['y'],
                          1080, 1980)
 
-        self.setCentralWidget(MainWindow())
+        app = MainWindow()
+        self.setCentralWidget(app)
+
+        # Start app in specific page
+        # 0 Dag Page
+        # 1 Xml Inspector
+        # 2 Nuke Launcher
+        # 3 About
+        app.main_window._tabs.setCurrentIndex(1)
 
 
 APP = QApplication(sys.argv)
