@@ -22,7 +22,7 @@ def widget_color(func):
             return
 
         with open(ui_state_file) as json_file:
-            if not json.load(json_file)['state']:
+            if json.load(json_file)['color_widgets'] is False:
                 return
 
         self.setAutoFillBackground(True)
