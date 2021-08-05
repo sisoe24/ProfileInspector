@@ -1,0 +1,534 @@
+#! /Applications/Nuke12.2v3/Nuke12.2v3.app/Contents/MacOS/libnuke-12.2.3.dylib -nx
+version 12.2 v3
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="3440" y="23" w="2560" h="1395" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1897" stretch="1"/>
+            <splitter orientation="2">
+                <split size="807"/>
+                <dock id="" activePageId="Viewer.3">
+                    <page id="Viewer.1"/>
+                    <page id="Viewer.2"/>
+                    <page id="Viewer.3"/>
+                </dock>
+                <split size="568"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/virgil/Developer/Projects/Nuke-Plugins/ProfileInspector/samples/sample_project.nk
+ last_frame 2
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Grade {
+ inputs 0
+ name Grade1
+ xpos -346
+ ypos -84
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file "\[value Current_Path.current_path]/zane-lee-X_CAWLrHbEE-unsplash.jpg"
+ format "6240 4160 0 0 6240 4160 1 "
+ origset true
+ version 1
+ name Read1
+ xpos -136
+ ypos -271
+}
+set N25b73800 [stack 0]
+Grade {
+ name Grade2_koj
+ xpos 53
+ ypos -165
+}
+Dot {
+ name Dot1
+ xpos 200
+ ypos -71
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name Write2
+ xpos 53
+ ypos 38
+}
+Grade {
+ name Grade4
+ xpos 53
+ ypos 62
+}
+Grade {
+ name Grade5
+ xpos 53
+ ypos 86
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name test_node
+ xpos 53
+ ypos 229
+}
+push $N25b73800
+Defocus {
+ defocus {{curve x1 3.2 x6 42.5}}
+ ratio 3.04
+ scale 3
+ quality 200
+ name Defocus
+ xpos -136
+ ypos -191
+}
+Grade {
+ multiply {{curve x1 1 x6 0.004}}
+ name Grade2_PROJECT_EXPORT
+ xpos -136
+ ypos -133
+}
+Grade {
+ white {{curve x1 1 x6 3.6}}
+ name Grade3
+ xpos -136
+ ypos -84
+}
+Write {
+ file /Users/virgil/.nuke/ProfileInspector/other/exports/x###.jpg
+ file_type jpeg
+ checkHashOnRead false
+ version 8
+ name Write1
+ xpos -136
+ ypos 29
+}
+Viewer {
+ frame 1
+ frame_range 1-2
+ name Viewer1
+ xpos -249
+ ypos 242
+}
+Grade {
+ inputs 0
+ name Grade2
+ xpos 296
+ ypos -270
+}
+NoOp {
+ inputs 0
+ name Profiling
+ xpos 42
+ ypos -318
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {20 knob_changed l "Knob Changed" n 1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {22 get_knob l get T "import pprint\npprint.pprint(nuke.callbacks.knobChangeds)" +STARTLINE}
+ addUserKnob {20 ui_callbacks l "UI Callbacks" n 1}
+ ui_callbacks 0
+ addUserKnob {22 get_ui_callbacks l Get T "import pprint\npprint.pprint(nuke.callbacks.updateUIs)" +STARTLINE}
+ addUserKnob {22 reset_ui_callbacks l "Hard Reset" t "delete all updateUIs dictionary" T nuke.callbacks.updateUIs.clear() +STARTLINE}
+ addUserKnob {22 reset_callback_ui l "Soft Reset" T "_dict = nuke.callbacks.updateUIs\nfor index, func in enumerate(_dict\['*']):\n        if func\[0].__name__ == callback.__name__:\n            del _dict\['*']\[index]" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Profiling n 1}
+ addUserKnob {22 start_profiling l Start T nuke.startPerformanceTimers() +STARTLINE}
+ addUserKnob {22 stop_profiling l Stop T nuke.stopPerformanceTimers() +STARTLINE}
+ addUserKnob {22 reset_profiling l Reset T nuke.resetPerformanceTimers() +STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 User_1 l User}
+}
+Grade {
+ inputs 0
+ name Grade6
+ xpos -346
+ ypos -84
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file zane-lee-X_CAWLrHbEE-unsplash.jpg
+ format "6240 4160 0 0 6240 4160 1 "
+ origset true
+ version 1
+ name Read2
+ xpos -136
+ ypos -271
+}
+set N25abfc00 [stack 0]
+Grade {
+ name Grade2_koj1
+ xpos 53
+ ypos -165
+}
+Dot {
+ name Dot2
+ xpos 200
+ ypos -71
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name Write3
+ xpos 53
+ ypos 38
+}
+Grade {
+ name Grade7
+ xpos 53
+ ypos 62
+}
+Grade {
+ name Grade8
+ xpos 53
+ ypos 86
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name test_node1
+ xpos 53
+ ypos 229
+}
+push $N25abfc00
+Defocus {
+ defocus {{curve x1 3.2 x6 42.5}}
+ ratio 3.04
+ scale 3
+ quality 200
+ name Defocus1
+ xpos -136
+ ypos -191
+}
+Grade {
+ multiply {{curve x1 1 x6 0.004}}
+ name Grade2_PROJECT_EXPORT1
+ xpos -136
+ ypos -133
+}
+Grade {
+ white {{curve x1 1 x6 3.6}}
+ name Grade9
+ xpos -136
+ ypos -84
+}
+Write {
+ file /Users/virgil/.nuke/ProfileInspector/other/exports/x###.jpg
+ file_type jpeg
+ checkHashOnRead false
+ version 8
+ name Write4
+ xpos -136
+ ypos 29
+}
+Grade {
+ inputs 0
+ name Grade10
+ xpos 296
+ ypos -270
+}
+NoOp {
+ inputs 0
+ name Profiling1
+ xpos 42
+ ypos -318
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {20 knob_changed l "Knob Changed" n 1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {22 get_knob l get T "import pprint\npprint.pprint(nuke.callbacks.knobChangeds)" +STARTLINE}
+ addUserKnob {20 ui_callbacks l "UI Callbacks" n 1}
+ ui_callbacks 0
+ addUserKnob {22 get_ui_callbacks l Get T "import pprint\npprint.pprint(nuke.callbacks.updateUIs)" +STARTLINE}
+ addUserKnob {22 reset_ui_callbacks l "Hard Reset" t "delete all updateUIs dictionary" T nuke.callbacks.updateUIs.clear() +STARTLINE}
+ addUserKnob {22 reset_callback_ui l "Soft Reset" T "_dict = nuke.callbacks.updateUIs\nfor index, func in enumerate(_dict\['*']):\n        if func\[0].__name__ == callback.__name__:\n            del _dict\['*']\[index]" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Profiling n 1}
+ addUserKnob {22 start_profiling l Start T nuke.startPerformanceTimers() +STARTLINE}
+ addUserKnob {22 stop_profiling l Stop T nuke.stopPerformanceTimers() +STARTLINE}
+ addUserKnob {22 reset_profiling l Reset T nuke.resetPerformanceTimers() +STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 User_1 l User}
+}
+Grade {
+ inputs 0
+ name Grade11
+ xpos -346
+ ypos -84
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file zane-lee-X_CAWLrHbEE-unsplash.jpg
+ format "6240 4160 0 0 6240 4160 1 "
+ origset true
+ version 1
+ name Read3
+ xpos -136
+ ypos -271
+}
+set N25abc400 [stack 0]
+Grade {
+ name Grade2_koj2
+ xpos 53
+ ypos -165
+}
+Dot {
+ name Dot3
+ xpos 200
+ ypos -71
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name Write5
+ xpos 53
+ ypos 38
+}
+Grade {
+ name Grade12
+ xpos 53
+ ypos 62
+}
+Grade {
+ name Grade13
+ xpos 53
+ ypos 86
+}
+Write {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name test_node2
+ xpos 53
+ ypos 229
+}
+push $N25abc400
+Defocus {
+ defocus {{curve x1 3.2 x6 42.5}}
+ ratio 3.04
+ scale 3
+ quality 200
+ name Defocus2
+ xpos -136
+ ypos -191
+}
+Grade {
+ multiply {{curve x1 1 x6 0.004}}
+ name Grade2_PROJECT_EXPORT2
+ xpos -136
+ ypos -133
+}
+Grade {
+ white {{curve x1 1 x6 3.6}}
+ name Grade14
+ xpos -136
+ ypos -84
+}
+Write {
+ file /Users/virgil/.nuke/ProfileInspector/other/exports/x###.jpg
+ file_type jpeg
+ checkHashOnRead false
+ version 8
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name Write6
+ xpos -136
+ ypos 29
+}
+Viewer {
+ frame_range 1-2
+ name Viewer3
+ xpos -249
+ ypos 242
+}
+Grade {
+ inputs 0
+ name Grade15
+ xpos 296
+ ypos -270
+}
+NoOp {
+ inputs 0
+ name Profiling2
+ xpos 42
+ ypos -318
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {20 knob_changed l "Knob Changed" n 1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {22 get_knob l get T "import pprint\npprint.pprint(nuke.callbacks.knobChangeds)" +STARTLINE}
+ addUserKnob {20 ui_callbacks l "UI Callbacks" n 1}
+ ui_callbacks 0
+ addUserKnob {22 get_ui_callbacks l Get T "import pprint\npprint.pprint(nuke.callbacks.updateUIs)" +STARTLINE}
+ addUserKnob {22 reset_ui_callbacks l "Hard Reset" t "delete all updateUIs dictionary" T nuke.callbacks.updateUIs.clear() +STARTLINE}
+ addUserKnob {22 reset_callback_ui l "Soft Reset" T "_dict = nuke.callbacks.updateUIs\nfor index, func in enumerate(_dict\['*']):\n        if func\[0].__name__ == callback.__name__:\n            del _dict\['*']\[index]" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Profiling n 1}
+ addUserKnob {22 start_profiling l Start T nuke.startPerformanceTimers() +STARTLINE}
+ addUserKnob {22 stop_profiling l Stop T nuke.stopPerformanceTimers() +STARTLINE}
+ addUserKnob {22 reset_profiling l Reset T nuke.resetPerformanceTimers() +STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 User_1 l User}
+}
+Grade {
+ inputs 0
+ name Grade16
+ xpos -346
+ ypos -84
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file "\[value Current_Path.current_path]/zane-lee-X_CAWLrHbEE-unsplash.jpg"
+ format "6240 4160 0 0 6240 4160 1 "
+ origset true
+ version 1
+ name Read4
+ xpos -136
+ ypos -271
+}
+set N25a20800 [stack 0]
+Defocus {
+ defocus {{curve x1 3.2 x6 42.5}}
+ ratio 3.04
+ scale 3
+ quality 200
+ name Defocus3
+ xpos -136
+ ypos -191
+}
+Grade {
+ multiply {{curve x1 1 x6 0.004}}
+ name Grade2_PROJECT_EXPORT3
+ xpos -136
+ ypos -133
+}
+Grade {
+ white {{curve x1 1 x6 3.6}}
+ name Grade19
+ xpos -136
+ ypos -84
+}
+Write {
+ file /Users/virgil/.nuke/ProfileInspector/other/exports/x###.jpg
+ file_type jpeg
+ checkHashOnRead false
+ version 8
+ name Write8
+ xpos -136
+ ypos 29
+}
+Viewer {
+ frame 1
+ frame_range 1-2
+ name Viewer4
+ xpos -249
+ ypos 242
+}
+Grade {
+ inputs 0
+ name Grade20
+ xpos 296
+ ypos -270
+}
+NoOp {
+ inputs 0
+ name Profiling3
+ xpos 42
+ ypos -317
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {20 knob_changed l "Knob Changed" n 1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {22 get_knob l get T "import pprint\npprint.pprint(nuke.callbacks.knobChangeds)" +STARTLINE}
+ addUserKnob {20 ui_callbacks l "UI Callbacks" n 1}
+ ui_callbacks 0
+ addUserKnob {22 get_ui_callbacks l Get T "import pprint\npprint.pprint(nuke.callbacks.updateUIs)" +STARTLINE}
+ addUserKnob {22 reset_ui_callbacks l "Hard Reset" t "delete all updateUIs dictionary" T nuke.callbacks.updateUIs.clear() +STARTLINE}
+ addUserKnob {22 reset_callback_ui l "Soft Reset" T "_dict = nuke.callbacks.updateUIs\nfor index, func in enumerate(_dict\['*']):\n        if func\[0].__name__ == callback.__name__:\n            del _dict\['*']\[index]" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Profiling n 1}
+ addUserKnob {22 start_profiling l Start T nuke.startPerformanceTimers() +STARTLINE}
+ addUserKnob {22 stop_profiling l Stop T nuke.stopPerformanceTimers() +STARTLINE}
+ addUserKnob {22 reset_profiling l Reset T nuke.resetPerformanceTimers() +STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 User_1 l User}
+}
+NoOp {
+ inputs 0
+ name Current_Path
+ label "Current Path of the script\n"
+ xpos -137
+ ypos -342
+ addUserKnob {20 User}
+ addUserKnob {2 current_path l "Current comp path"}
+ current_path /Users/virgil/Developer/Projects/Nuke-Plugins/ProfileInspector/samples
+ addUserKnob {22 set_cwd l "Auto Set Path" T "import os\n\ndef cwd():\n    return os.path.dirname(os.path.abspath(nuke.root().name()))\n\nthis_node = nuke.thisNode()\nthis_node.knob('current_path').setValue(cwd())\n" +STARTLINE}
+}
+push $N25a20800
+Grade {
+ name Grade2_koj3
+ xpos 53
+ ypos -165
+}
+Dot {
+ name Dot4
+ xpos 200
+ ypos -71
+}
+Write {
+ name Write7
+ xpos 53
+ ypos 38
+}
+Grade {
+ name Grade17
+ xpos 53
+ ypos 62
+}
+Grade {
+ name Grade18
+ xpos 53
+ ypos 86
+}
+Write {
+ name test_node3
+ xpos 53
+ ypos 229
+}
+push $N25a20800
+Viewer {
+ frame 1
+ frame_range 1-2
+ name Viewer2
+ xpos -249
+ ypos 242
+}
