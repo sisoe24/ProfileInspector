@@ -21,7 +21,6 @@ from PySide2.QtWidgets import (
 )
 
 from ProfileInspector.src.util import widget_color, doc_file
-from ..hover_popup import HoverHelper
 
 
 from .search_bar_settings import SearchBarSettingsWidget
