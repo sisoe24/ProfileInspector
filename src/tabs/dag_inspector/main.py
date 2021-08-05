@@ -24,7 +24,7 @@ from .widgets import ProfilingWidget
 from .dag_nodes import DagNodes
 
 from ProfileInspector.src import nuke
-from ProfileInspector.src.util.nuke_util import zoom_node
+from ProfileInspector.src._nuke import zoom_node
 from ProfileInspector.src.widgets import SearchBarWidget, ToolBar
 from ProfileInspector.src.util import TimeFormatter, widget_color, doc_file
 

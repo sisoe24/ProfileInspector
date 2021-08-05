@@ -14,7 +14,7 @@ try:
 except ImportError as error:
     LOGGER.warning('%s: app is standalone' % error)
     try:
-        from . import _nuke as nuke
+        import _nuke as nuke
     except Exception as error:
         LOGGER.critical(error, exc_info=True)
         sys.exit()
