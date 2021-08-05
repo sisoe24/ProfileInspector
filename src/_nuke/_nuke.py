@@ -8,19 +8,19 @@ import logging
 from PySide2.QtWidgets import QFileDialog
 
 
-def set_handler():
-    log_path = os.path.join(os.path.dirname(__file__), 'log', 'nuke.log')
-    handler = logging.FileHandler(log_path, 'w')
+LOGGER = logging.getLogger('nuke')
+
+
+def set_logger(path):
+    handler = logging.FileHandler(os.path.join(path, 'nuke.log'), 'w')
+
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(logging.Formatter(
         '%(levelname)-8s %(funcName)-25s L:%(lineno)-3s :: %(message)s'
     ))
-    return handler
 
-
-LOGGER = logging.getLogger('nuke')
-LOGGER.setLevel(logging.DEBUG)
-LOGGER.addHandler(set_handler())
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(handler)
 
 
 NUKE_VERSION_STRING = '13.0v1'
