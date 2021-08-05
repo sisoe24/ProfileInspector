@@ -7,7 +7,7 @@ from PySide2.QtCore import QSettings, QCoreApplication
 from PySide2.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
 from ProfileInspector.src import tabs
-from ProfileInspector.src.widgets import ErrorDialog
+from ProfileInspector.src.widgets import ErrorDialog, HelpWidget
 
 
 LOGGER = logging.getLogger('ProfileInspector.main')
@@ -31,7 +31,7 @@ class MainWindowTabs(QTabWidget):
         self.addTab(tabs.DagInspector(), 'DAG')
         self.addTab(tabs.FileInspectorWidget(), 'XML Report')
         self.addTab(tabs.NukeLauncher(), 'Other')
-        self.addTab(tabs.HelpTab(), 'Help')
+        self.addTab(HelpWidget(), 'Help')
 
         # self.setCurrentIndex(3)
 
