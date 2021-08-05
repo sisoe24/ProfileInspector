@@ -26,7 +26,8 @@ from .dag_nodes import DagNodes
 from ProfileInspector.src import nuke
 from ProfileInspector.src._nuke import zoom_node
 from ProfileInspector.src.widgets import SearchBarWidget, ToolBar
-from ProfileInspector.src.util import TimeFormatter, widget_color, doc_file
+from ProfileInspector.src.util import TimeFormatter, widget_color
+from ProfileInspector.src.resources import whats_this_doc
 
 
 LOGGER = logging.getLogger('ProfileInspector.dag_inspector')
@@ -106,7 +107,7 @@ class TableModel(QStandardItemModel):
 class TableView(QTableView):
     def __init__(self):
         QTableView.__init__(self)
-        self.setWhatsThis(doc_file('dag_table'))
+        self.setWhatsThis(whats_this_doc('dag_table'))
 
         self.settings = QSettings()
 
@@ -205,7 +206,8 @@ class DagPageLayout(QWidget):
         self.table_view = TableView()
 
         self.refresh_table_btn = QPushButton('Refresh Table')
-        self.refresh_table_btn.setWhatsThis(doc_file('dag_refresh_table'))
+        self.refresh_table_btn.setWhatsThis(
+            whats_this_doc('dag_refresh_table'))
         self.refresh_table_btn.setToolTip(
             'Refresh table by reloading nodes data'
         )

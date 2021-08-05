@@ -1,8 +1,6 @@
 # coding: utf-8
 from __future__ import print_function
 
-from textwrap import dedent
-
 
 from PySide2.QtWidgets import (
     QGroupBox,
@@ -12,30 +10,15 @@ from PySide2.QtWidgets import (
 )
 
 
-from ProfileInspector.src.util import widget_color, doc_file
-
-TIMINGS_PROFILING_TYPE = '''
-<b>Change profiling type</b><br>
-store - store the values the user has selected on its knobs.<br>
-validate - this is where the node tells Nuke about the output it produces. <br>
-request - his is where the node works out what data it will need from its inputs in order to produce its output.<br>
-engine - this is where the node does most of its work, and actually generates its output.<br>
-'''
-
-TIMINGS_FORMAT_TYPE = '''
-<b> Convert table timings </b> <br>
-ms - milliseconds <br>
-s:ms - seconds, milliseconds <br>
-m:s - minutes, seconds <br>
-m:s:ms - minutes, seconds, milliseconds <br>
-'''
+from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.resources import whats_this_doc
 
 
 class TimingsGroup(QGroupBox):
     @widget_color
     def __init__(self, title='Timings'):
         QGroupBox.__init__(self, title)
-        self.setWhatsThis(doc_file('timings'))
+        self.setWhatsThis(whats_this_doc('timings'))
 
         self.form_layout = QFormLayout()
 

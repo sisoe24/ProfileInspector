@@ -35,7 +35,8 @@ from .controller import FileInspectorController
 from .report_parser import XmlData
 
 from ProfileInspector.src import nuke
-from ProfileInspector.src.util import TimeFormatter, widget_color, doc_file
+from ProfileInspector.src.resources import whats_this_doc
+from ProfileInspector.src.util import TimeFormatter, widget_color
 from ProfileInspector.src.widgets import (
     SearchBarWidget,
     ErrorDialog,
@@ -80,7 +81,7 @@ class FramesBox(QGroupBox):
     def __init__(self, title='Frames'):
         QGroupBox.__init__(self, title)
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        self.setWhatsThis(doc_file('xml_frames'))
+        self.setWhatsThis(whats_this_doc('xml_frames'))
 
         # fixed range
         self._frame_box = QSpinBox()
@@ -325,7 +326,7 @@ class XmlTableView(QTableView):
         QTableView.__init__(self)
         self.setSortingEnabled(True)
 
-        self.setWhatsThis(doc_file('xml_table'))
+        self.setWhatsThis(whats_this_doc('xml_table'))
         self._table_model = XmlTableModel()
 
         self._filter_proxy = QSortFilterProxyModel()

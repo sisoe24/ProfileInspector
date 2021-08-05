@@ -11,7 +11,7 @@ from PySide2.QtWidgets import (
     QWidget,
 )
 
-from ProfileInspector.src.util import doc_file
+from ProfileInspector.src.resources import whats_this_doc
 
 BG_COLOR = QColor(30, 30, 30, 150)
 
@@ -76,7 +76,7 @@ class HoverHelper(QWidget):
 
         if show_helper in (True, 'true'):
 
-            self.set_text(doc_file(self._file))
+            self.set_text(whats_this_doc(self._file))
 
             screen_position = self.parent().geometry()
 

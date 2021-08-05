@@ -17,8 +17,9 @@ from PySide2.QtWidgets import (
     QGridLayout,
 )
 
-from ProfileInspector.src.util import widget_color, doc_file
+from ProfileInspector.src.util import widget_color
 from ProfileInspector.src.widgets import TimingsGroup
+from ProfileInspector.src.resources import whats_this_doc
 
 LOGGER = logging.getLogger('ProfileInspector.dag_profiling')
 
@@ -27,7 +28,7 @@ class LiveGroup(QGroupBox):
     @widget_color
     def __init__(self, title='Live Updates (Experimental)'):
         QGroupBox.__init__(self, title)
-        self.setWhatsThis(doc_file('dag_live_update'))
+        self.setWhatsThis(whats_this_doc('dag_live_update'))
 
         _layout = QVBoxLayout()
 

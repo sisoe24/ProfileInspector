@@ -9,13 +9,10 @@ from PySide2.QtWidgets import (
     QPlainTextEdit
 )
 
-from ProfileInspector.src.util import doc_file
-
 
 class CaptureStdoutDialog(QDialog):
     def __init__(self):
         QDialog.__init__(self)
-        # self.setWhatsThis(doc_file('launcher_capture_output'))
 
         self.setWindowTitle('Profile Inspector - Capture stdout')
         self.setMinimumSize(600, 300)

@@ -30,7 +30,8 @@ from PySide2.QtWidgets import (
 )
 
 from ProfileInspector.src import nuke
-from ProfileInspector.src.util import widget_color, doc_file
+from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.resources import whats_this_doc
 from ProfileInspector.src.widgets import DockableWindow, ToolBar
 
 from .widgets import CaptureStdoutDialog
@@ -175,7 +176,7 @@ class UpperWidgets(QWidget):
 class CaptureOutput(DockableWindow):
     def __init__(self):
         DockableWindow.__init__(self, title='Capture Output')
-        self.setWhatsThis(doc_file('launcher_capture_output'))
+        self.setWhatsThis(whats_this_doc('launcher_capture_output'))
 
         self.capture_output = CaptureStdoutDialog()
         self.setWidget(self.capture_output)
@@ -209,7 +210,7 @@ class NukeLauncher(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setFocusPolicy(Qt.NoFocus)
-        self.setWhatsThis(doc_file('launcher_capture_output'))
+        self.setWhatsThis(whats_this_doc('launcher_capture_output'))
 
         toolbar = NukeLauncherToolBar()
         self.addToolBar(toolbar)
