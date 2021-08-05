@@ -6,10 +6,10 @@ import os
 from ..report_parser import XmlData
 
 FILES = [
-    'samples/profiling.xml',
-    'samples/profiling_simple.xml',
-    'samples/profiling_unclosed_tags.xml',
-    'samples/profiling_wrong_type.xml',
+    'samples/profiling/profiling.xml',
+    'samples/profiling/profiling_simple.xml',
+    'samples/profiling/profiling_unclosed_tags.xml',
+    'samples/profiling/profiling_wrong_type.xml',
 ]
 
 
