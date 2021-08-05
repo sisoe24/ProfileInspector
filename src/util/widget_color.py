@@ -2,8 +2,6 @@
 from __future__ import print_function
 
 import os
-import json
-
 from random import randint
 
 from PySide2.QtGui import QPalette, QColor
@@ -17,12 +15,14 @@ def widget_color(func):
         self = args[0]
         func(self)
 
-        ui_state_file = 'src/config/color_state.json'
+        ui_state_file = '.color_state'
         if not os.path.exists(ui_state_file):
             return
 
-        with open(ui_state_file) as json_file:
-            if json.load(json_file)['color_widgets'] is False:
+        with open(ui_state_file) as state_file:
+            state = state_file.read().strip()
+
+            if state == 'False':
                 return
 
         self.setAutoFillBackground(True)
@@ -36,5 +36,4 @@ def widget_color(func):
                 randint(0, 256), randint(0, 256), randint(0, 256)))
 
         self.setPalette(palette)
-
     return inner_wrapper

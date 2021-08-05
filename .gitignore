@@ -2,11 +2,10 @@
 .vscode
 scripts
 other
-tasks
 log
 code
-tasks
 dist
+.color_state
 
 # files
 .DS_Store
