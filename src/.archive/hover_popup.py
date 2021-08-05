@@ -1,4 +1,5 @@
 # coding: utf-8
+"""Currently not in use."""
 from __future__ import print_function
 
 from PySide2.QtCore import Qt, QSettings
