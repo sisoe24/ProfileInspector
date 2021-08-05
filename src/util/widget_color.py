@@ -17,7 +17,7 @@ def widget_color(func):
         self = args[0]
         func(self)
 
-        ui_state_file = 'src/config/state.json'
+        ui_state_file = 'src/config/color_state.json'
         if not os.path.exists(ui_state_file):
             return
 
