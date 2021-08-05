@@ -8,7 +8,7 @@ from PySide2.QtGui import QClipboard, QDesktopServices
 from PySide2.QtWidgets import QMessageBox
 
 
-from ProfileInspector.src.about import about_to_string, get_about_key
+from src.about import about_to_string, get_about_key
 
 
 LOGGER = logging.getLogger('ProfileInspector.error_dialog')

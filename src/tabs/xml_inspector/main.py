@@ -34,10 +34,10 @@ from .util import _bypass_filedialog
 from .controller import FileInspectorController
 from .report_parser import XmlData
 
-from ProfileInspector.src import nuke
-from ProfileInspector.src.resources import whats_this_doc
-from ProfileInspector.src.util import TimeFormatter, widget_color
-from ProfileInspector.src.widgets import (
+from src import nuke
+from src.resources import whats_this_doc
+from src.util import TimeFormatter, widget_color
+from src.widgets import (
     SearchBarWidget,
     ErrorDialog,
     TimingsGroup,

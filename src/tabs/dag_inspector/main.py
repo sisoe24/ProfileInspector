@@ -23,11 +23,11 @@ from .controller import (
 from .widgets import ProfilingWidget
 from .dag_nodes import DagNodes
 
-from ProfileInspector.src import nuke
-from ProfileInspector.src._nuke import zoom_node
-from ProfileInspector.src.widgets import SearchBarWidget, ToolBar
-from ProfileInspector.src.util import TimeFormatter, widget_color
-from ProfileInspector.src.resources import whats_this_doc
+from src import nuke
+from src._nuke import zoom_node
+from src.widgets import SearchBarWidget, ToolBar
+from src.util import TimeFormatter, widget_color
+from src.resources import whats_this_doc
 
 
 LOGGER = logging.getLogger('ProfileInspector.dag_inspector')
