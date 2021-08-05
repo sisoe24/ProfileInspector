@@ -24,9 +24,9 @@ from .widgets import ProfilingWidget
 from .dag_nodes import DagNodes
 
 from src import nuke
-from src._nuke import zoom_node
+# from src._nuke import zoom_node
 from src.widgets import SearchBarWidget, ToolBar
-from src.util import TimeFormatter, widget_color
+from src.util import TimeFormatter, widget_color, zoom_node
 from src.resources import whats_this_doc
 
 

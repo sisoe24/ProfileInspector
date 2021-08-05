@@ -3,7 +3,7 @@ from __future__ import print_function
 
 from PySide2.QtCore import Qt, QSettings
 
-from src._nuke import zoom_node
+from src.util import zoom_node
 
 
 class SearchBarController():
