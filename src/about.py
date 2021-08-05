@@ -80,7 +80,7 @@ def about_links():
         ('Changelog', github_web + '/blob/main/CHANGELOG.md'),
         ('Issues', github_web + '/issues'),
         ('Nukepedia', 'https://www.nukepedia.com/python/ui/profileinspector'),
-        ('Logs', 'file:///%s/src/log' % _get_root()),
+        ('Logs', 'file:///%s/log' % _get_root()),
         ('Other', '')
     )
 
