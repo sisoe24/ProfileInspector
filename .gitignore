@@ -5,9 +5,10 @@ other
 log
 code
 dist
-.color_state
+*egg-info
 
 # files
+.color_state
 .DS_Store
 *.pyc
 _app.py

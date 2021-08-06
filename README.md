@@ -14,6 +14,7 @@ A Nuke plugin that helps to visualize the application profiling information in a
     - [1.5.1. Live Update](#151-live-update)
     - [1.5.2. Dock Windows](#152-dock-windows)
     - [1.5.3. Compatibility](#153-compatibility)
+    - [1.5.4. Test plugin locally](#154-test-plugin-locally)
 
 ---
 
@@ -139,3 +140,21 @@ While it should work the same on all platforms, it has been currently only teste
   - Mojave 10.14.06
   - Catalina 10.15.06
 - Windows 10
+
+### 1.5.4. Test plugin locally
+
+> This works only on Linux and Mac. Probably Windows WSL but haven't tested it yet.
+
+While limited in some regards, the plugin can be tested outside Nuke environment.
+
+1. Clone the github repo into your machine.
+2. `pipenv instal --ignore-pipfile` for normal installation or `pipenv install --ignore-pipfile --dev -e .` if you want to test the code with `pytest` (No tests are provided at the time of writing. 🤭)
+3. Launch the app via terminal `python -m tests.run_app` or vscode task: `RunApp`
+
+The local plugin offers a simple emulation of the Nuke's internal modules which can be found in _ProfileInspector/src/\_nuke/fake\_nuke.py_.
+
+When the application starts it will:
+
+1. Load some random nodes into the table.
+2. Load a xml file.
+3. Fill the entry for the Nuke Launcher tab.

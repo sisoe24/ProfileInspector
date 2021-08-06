@@ -8,6 +8,7 @@ pyside2 = "==5.12.2"
 
 [dev-packages]
 pytest = "==4.6.11"
+profileinspector = {editable = true, path = "."}
 
 [requires]
 python_version = "2.7"
