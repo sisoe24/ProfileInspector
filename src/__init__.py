@@ -4,8 +4,8 @@ from __future__ import print_function
 import sys
 import logging
 
-from src import logger
-from src import resources
+from ProfileInspector.src import logger
+from ProfileInspector.src import resources
 
 LOGGER = logging.getLogger('ProfileInspector.init')
 try:

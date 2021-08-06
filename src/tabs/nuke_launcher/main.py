@@ -29,10 +29,10 @@ from PySide2.QtWidgets import (
 
 )
 
-from src import nuke
-from src.util import widget_color
-from src.resources import whats_this_doc
-from src.widgets import DockableWindow, ToolBar
+from ProfileInspector.src import nuke
+from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.resources import whats_this_doc
+from ProfileInspector.src.widgets import DockableWindow, ToolBar
 
 from .widgets import CaptureStdoutDialog
 from .controller import LaunchNukeController

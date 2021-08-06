@@ -20,8 +20,8 @@ from PySide2.QtWidgets import (
     QComboBox,
 )
 
-from src.util import widget_color
-from src.resources import whats_this_doc
+from ProfileInspector.src.util import widget_color
+from ProfileInspector.src.resources import whats_this_doc
 
 
 from .search_bar_settings import SearchBarSettingsWidget

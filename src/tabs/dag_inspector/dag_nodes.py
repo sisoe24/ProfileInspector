@@ -6,7 +6,7 @@ import collections
 
 from PySide2.QtCore import QSettings
 
-from src import nuke
+from ProfileInspector.src import nuke
 
 LOGGER = logging.getLogger('ProfileInspector.dag_nodes')
 

@@ -1,1 +1,1 @@
-from . import src
+from ProfileInspector import src

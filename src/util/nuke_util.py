@@ -1,4 +1,4 @@
-from src import nuke
+from ProfileInspector.src import nuke
 
 
 def zoom_node(node):

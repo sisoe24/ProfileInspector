@@ -12,8 +12,8 @@ from textwrap import dedent
 from PySide2.QtCore import QProcess
 from PySide2.QtWidgets import QFileDialog
 
-from src import nuke
-from src.widgets import ErrorDialog
+from ProfileInspector.src import nuke
+from ProfileInspector.src.widgets import ErrorDialog
 
 from .util import _bypass_filedialog, mac_nuke_exec
 

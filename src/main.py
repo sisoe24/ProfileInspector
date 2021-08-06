@@ -6,9 +6,9 @@ import logging
 from PySide2.QtCore import QSettings, QCoreApplication
 from PySide2.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
-from src import tabs
-from src.about import get_about_key
-from src.widgets import ErrorDialog, AboutWidget
+from ProfileInspector.src import tabs
+from ProfileInspector.src.about import get_about_key
+from ProfileInspector.src.widgets import ErrorDialog, AboutWidget
 
 
 LOGGER = logging.getLogger('ProfileInspector.main')
