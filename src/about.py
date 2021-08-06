@@ -12,7 +12,7 @@ from PySide2.QtCore import __version__ as QtCore_version
 from PySide2.QtCore import QSysInfo
 
 
-def get_git_branch():
+def _get_git_branch():
     """Get git branch name if any."""
     branch = ""
 
@@ -60,7 +60,7 @@ def about():
         ('PySide2', PySide2_Version),
         ('PySide2.QtCore', QtCore_version),
         ('Machine', QSysInfo().prettyProductName()),
-        ('Branch', get_git_branch()),
+        ('Branch', _get_git_branch()),
         ('Other', '')
     )
 
@@ -85,10 +85,10 @@ def about_links():
 
 def get_about_key(key):
     """Get a specific key in about. return empty string if not found."""
-    for abouts in [about(), about_links()]:
-        for item in abouts:
-            if key in item:
-                return item[1]
+    abouts = about() + about_links()
+    for item in abouts:
+        if key in item:
+            return item[1]
     return ''
 
 
