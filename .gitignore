@@ -1,11 +1,11 @@
 # folders
 .vscode
-scripts
 other
 log
 code
 dist
 *egg-info
+.pytest_cache
 
 # files
 .color_state
