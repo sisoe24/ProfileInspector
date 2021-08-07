@@ -4,69 +4,81 @@ from __future__ import print_function, with_statement
 import logging
 import traceback
 
-from PySide2.QtGui import QClipboard, QDesktopServices
+
 from PySide2.QtWidgets import QMessageBox
+from PySide2.QtGui import QClipboard, QDesktopServices
 
-
-from ProfileInspector.src.about import about_to_string, get_about_key
+from ProfileInspector.src.about import get_about_key, about_to_string
 
 
 LOGGER = logging.getLogger('ProfileInspector.error_dialog')
 
 
-def prepare_report(about_str):
-    """Prepare report when user wants to report bug to github and
-    insert about information to log critical file.
+def _get_critical_logger():
+    """Search for logger named Critical if any and return it."""
 
-    Args:
-        about (str): package/machine information from package.src.about
-    """
     for logger in LOGGER.parent.handlers:
         if logger.name == 'Critical':
+            return logger
 
-            with open(logger.baseFilename, 'r+') as file:
-                content = file.read()
-                file.seek(0, 0)
-                file.write(about_str + '\n' + content)
+    return None
 
-    report = about_to_string()
-    return report
+
+def _prepare_report():
+    """Prepare report when user wants to report bug to github and
+    insert 'about' information to log critical file.
+    """
+
+    critical_logger = _get_critical_logger()
+
+    if not critical_logger:
+        return None
+
+    with open(critical_logger.baseFilename, 'r+') as file:
+        content = file.read()
+        file.seek(0, 0)
+
+        about_traceback = about_to_string() + '\n' + content
+        file.write(about_traceback)
+
+    return about_traceback
 
 
 class ErrorDialog(QMessageBox):
     def __init__(self, parent, msg):
         QMessageBox.__init__(self, parent)
-        self.setWindowTitle('Profile Inspector')
+        self.setWindowTitle('ProfileInspector')
         self.setIcon(QMessageBox.Warning)
 
-        self.setStandardButtons(QMessageBox.Help | QMessageBox.Ok)
+        self.setText('ProfileInspector error...')
+        self.setInformativeText(str(msg))
 
+        self.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
         self.addButton('Report bug', QMessageBox.ActionRole)
+        self.addButton('Open logs', QMessageBox.ActionRole)
 
         self.buttonClicked.connect(self.click_event)
 
-        self.setText('Profile Inspector error...')
-        self.setInformativeText(msg)
+        _info = (
+            'Traceback will be copied into your clipboard when clicking Report Bug.\n---\n'
+        )
 
-        self.traceback_msg = traceback.format_exc()
-        self.setDetailedText(self.traceback_msg)
+        self._traceback = traceback.format_exc()
+        self.setDetailedText(_info + self._traceback)
 
     def click_event(self, button):
         if button.text() == 'Report bug':
-            q = QMessageBox()
-            q.setIcon(QMessageBox.Information)
-            q.setText('Report Bug')
-            q.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
-            q.setInformativeText('Report bug via github')
-            q.setDetailedText(
-                'The machine info and traceback will be copied into your clipboard when you press Ok. '
-                'Alternatively it can be found inside the ProfileInspector/log/errors.log')
-            q.exec_()
+
+            report = _prepare_report()
+            if not report:
+                report = self._traceback
 
             clipboard = QClipboard()
-            clipboard.setText(prepare_report(self.traceback_msg))
+            clipboard.setText(report)
 
-            QDesktopServices.openUrl(get_about_key('Issues'))
+            to_open = get_about_key('Issues')
 
-        elif button.text() == 'Help':
-            pass
+        elif button.text() == 'Open logs':
+            to_open = get_about_key('Logs')
+
+        QDesktopServices.openUrl(to_open)
