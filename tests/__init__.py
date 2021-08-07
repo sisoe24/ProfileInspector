@@ -6,7 +6,7 @@ At least I am only adding to path when testing locally and not when Nuke is runn
 
 Also should be noted that the app is launched in "module mode" to work:
 
-    `python -m tests.app`
+    `python -m tests.run_app`
 
 """
 from os.path import dirname, abspath
