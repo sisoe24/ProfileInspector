@@ -120,7 +120,7 @@ Much like the floating panel in Nuke, certain windows can be undocked for conven
 
 To dock/un-dock simply double click on the window titlebar, drag the window or use the apposite buttons.
 
-![DockWindow](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dock_window.png)
+![DockWindow](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/images/dock_window.jpg)
 
 ## 1.5. Compatibility
 
