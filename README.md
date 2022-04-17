@@ -57,7 +57,7 @@ The basic idea is that you can take a snapshot of the current node's timings by 
 
 1. Activate the profiling section by clicking on the **Activate Profile Section** checkbox. This action will enable some subsections and show the node's profiling timings which are likely to be at 0 if it's the first run.
 2. Now you can start the profiling by clicking on the Start Profiling button.
-You can update the timers with the shortcut **U** which will trigger the image recalculation.
+You can update the timers with the shortcut **U** which will trigger the image recalculation or by adjusting some node parameters.
 3. Now you can refresh the table again and save a snapshot of the current timings (timings will stay in the table even if you stop the profiling listener).
 4. Bonus. Enable [Live update](#172-live-update) and find a node to tweak. Once done, retake a snapshot by refreshing the table.
 
