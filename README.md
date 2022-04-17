@@ -11,7 +11,7 @@ A Nuke plugin that lets you visualize the profiling information in a more conven
     - [1.3.3. Nuke Launcher](#133-nuke-launcher)
   - [1.4. Extras](#14-extras)
     - [1.4.1. Live Update](#141-live-update)
-    - [1.4.2. Dock Windows](#142-dock-windows)
+    - [1.4.2. Dock **Windows**](#142-dock-windows)
   - [1.5. Compatibility](#15-compatibility)
   - [1.6. Test plugin locally](#16-test-plugin-locally)
 
@@ -49,7 +49,7 @@ Navigate the DAG
 - Searching a node from the table will automatically center the DAG view on the first node that matches the search.
 - You can click on a node name inside the table to open its property panel.
 
-![DagNavigation](/images/dag_navigation.gif)
+![DagNavigation](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/images/dag_navigation.gif)
 
 Inspect profiling information.
 
@@ -63,7 +63,7 @@ You can update the timers with the shortcut **U** which will trigger the image r
 
 > When Nuke starts, if the table is empty, you can refresh it by clicking the **Refresh Table** button. This action will take a snapshot of the current nodes present in the graph.
 
-![Profiling](/images/profiling.gif)
+![Profiling](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/images/profiling.gif)
 
 ### 1.3.2. XML Report
 
@@ -78,7 +78,7 @@ Usage
 
 > The window can also be un-docked (see [dock windows](#dock-windows) for more info).
 
-![XmlReport](/images/xml_report.gif)
+![XmlReport](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/images/xml_report.gif)
 
 ### 1.3.3. Nuke Launcher
 
@@ -110,17 +110,17 @@ So the idea behind the live update is that; at each node parameter change, a cal
 
 If you have some insights, please let me know.
 
-![LiveUpdate](/images/live_update.gif)
+![LiveUpdate](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/images/live_update.gif)
 
-### 1.4.2. Dock Windows
+### 1.4.2. Dock **Windows**
 
-> This feature is a leftover prototype, and I might remove it in future updates..
-
-<img title="Dock Window" src="https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dock_window.png" width="90%"/>
+> This feature is a leftover prototype, and I might remove it in future updates.
 
 Much like the floating panel in Nuke, certain windows can be undocked for convenience.
 
 To dock/un-dock simply double click on the window titlebar, drag the window or use the apposite buttons.
+
+![DockWindow](https://raw.githubusercontent.com/sisoe24/ProfileInspector/main/src/resources/images/dock_window.png)
 
 ## 1.5. Compatibility
 
