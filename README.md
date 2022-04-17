@@ -3,7 +3,7 @@
 A Nuke plugin that lets you visualize the profiling information in a more convenient and user-friendly manner.
 
 - [1. Profile Inspector](#1-profile-inspector)
-  - [1.1. IMPORTANT NOTE](#11-important-note)
+  - [1.1. NOTE](#11-note)
   - [1.2. Installation](#12-installation)
   - [1.3. Usage](#13-usage)
     - [1.3.1. Dag tab](#131-dag-tab)
@@ -17,9 +17,9 @@ A Nuke plugin that lets you visualize the profiling information in a more conven
 
 ---
 
-## 1.1. IMPORTANT NOTE
+## 1.1. NOTE
 
-The plugin is still in a stage of development so the code is not yet documented as things could change or be moved/removed.
+The plugin is mainly a case study for PySide2 and is still in early development. Also, documentation is not present, as things could change.
 
 ---
 
@@ -45,7 +45,7 @@ You can use the DAG tab for two reasons:
 
 Navigate the DAG
 
-- You can live filter the nodes using a regex pattern. 
+- You can live filter the nodes using a regex pattern.
 - Searching a node from the table will automatically center the DAG view on the first node that matches the search.
 - You can click on a node name inside the table to open its property panel.
 
